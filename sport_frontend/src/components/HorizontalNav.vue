@@ -8,7 +8,11 @@
                 <RouterLink to="/about" class="nav-link " active-class="active">樓層介紹</RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink to="/reservation" class="nav-link " active-class="active">場地預約</RouterLink>
+                <RouterLink 
+                  to="/reservation" 
+                  class="nav-link"
+                  :class="{ 'active': isReservationActive }"
+                >場地預約</RouterLink>
             </li>
             <li class="nav-item">
                 <RouterLink to="/traffic" class="nav-link " active-class="active">交通資訊</RouterLink>
@@ -22,13 +26,28 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+export default {
+    setup() {
+        const route = useRoute();
+        
+        const isReservationActive = computed(() => {
+            return route.path === '/reservation' || route.path.includes('/cardView/');
+        });
+
+        return {
+            isReservationActive
+        };
+    }
+}
 </script>
 
 <style>
 .nav-item {
     font-size: 18px;
 }
-
 
 .nav-tabs {
     --bs-nav-tabs-border-width: 2px !important;
@@ -46,7 +65,6 @@ import { RouterLink } from 'vue-router';
     border-left: 2px solid #FF7452 !important;
     border-right: 2px solid #FF7452 !important;
     border-bottom: 2px solid rgb(249, 249, 249) !important;
-
 }
 
 .nav-link:hover {
@@ -55,41 +73,30 @@ import { RouterLink } from 'vue-router';
     border-top: 2px solid #FF7452 !important;
     border-left: 2px solid #FF7452 !important;
     border-right: 2px solid #FF7452 !important;
-    border-bottom: 1px solid #FF7452 !important;
+    border-bottom: 2px solid #FF7452 !important;
 }
 
 @media screen and (max-width: 580px) {
-
     .nav-item {
         font-size: 15px;
     }
-
 }
 
 @media screen and (max-width: 510px) {
-
     .nav-item {
         font-size: 13px;
     }
-
 }
 
 @media screen and (max-width: 485px) {
-
     .nav-item {
         font-size: 10px;
     }
-
 }
-
 
 @media screen and (max-width: 425px) {
     .nav-item {
         font-size: 9px;
     }
 }
-
-
-
-/* END */
 </style>
