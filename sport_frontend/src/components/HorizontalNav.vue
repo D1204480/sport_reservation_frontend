@@ -1,25 +1,23 @@
 <template>
-
     <div class="container-fluid fs-6">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <RouterLink to="/" class="nav-link link-success active" >首頁</RouterLink>
+                <RouterLink to="/" class="nav-link " exact-active-class="active">首頁</RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink to="/about" class="nav-link link-success" aria-current="page">樓層介紹</RouterLink>
+                <RouterLink to="/about" class="nav-link " active-class="active">樓層介紹</RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink class="nav-link link-success " >場地預約</RouterLink>
+                <RouterLink to="/reservation" class="nav-link " active-class="active">場地預約</RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink class="nav-link link-success" >交通資訊</RouterLink>
+                <RouterLink to="/traffic" class="nav-link " active-class="active">交通資訊</RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink class="nav-link link-success" >無障礙設施</RouterLink>
+                <RouterLink to="/accessibility" class="nav-link " active-class="active">無障礙設施</RouterLink>
             </li>
         </ul>
     </div>
-
 </template>
 
 <script>
@@ -52,7 +50,6 @@ import { RouterLink } from 'vue-router';
 }
 
 .nav-link:hover {
-    color: black !important;
     border-top: 2px solid #FF7452 !important;
     border-left: 2px solid #FF7452 !important;
     border-right: 2px solid #FF7452 !important;

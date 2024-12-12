@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import NavBar from '@/components/NavBar.vue';
 import Foot from '@/components/Foot.vue';
+import HorizontalCard from '@/components/HorizontalNav.vue';
 
 
 </script>
@@ -12,10 +13,15 @@ import Foot from '@/components/Foot.vue';
 
     <div class="main-content">
 
+
       <NavBar />
-      
+
+
+      <HorizontalCard />
+
+
       <!-- <RouterLink/> -->
-      <RouterView/>
+      <RouterView />
 
     </div>
 

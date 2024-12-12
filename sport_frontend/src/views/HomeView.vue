@@ -1,12 +1,10 @@
 <script setup>
-import HorizontalCard from '@/components/HorizontalNav.vue'
+
 
 </script>
 
 <template>
-    <div>
-        <HorizontalCard />
-    </div>
+
 
     <div class="home-container">
         <!-- 最新消息區塊 -->
