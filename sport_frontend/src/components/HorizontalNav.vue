@@ -28,64 +28,57 @@ import { RouterLink } from 'vue-router';
 
 <style>
 .nav {
-    border-bottom: 2px solid #FF7452 !important; /* 下方加橘色線條 */
+    border-bottom: 2px solid #FF7452 !important;
+    /* 下方加橘色線條 */
 
 }
+
 .nav-link {
-    color: black !important; /* 非 active 的狀態 */
-    
+    color: black !important;
+    /* 非 active 的狀態 */
+
 }
+
 .nav-link.active {
     color: black !important;
-    border-top: 2px solid #FF7452 !important; 
-    border-left: 2px solid #FF7452 !important; 
-    border-right: 2px solid #FF7452 !important; 
+    border-top: 2px solid #FF7452 !important;
+    border-left: 2px solid #FF7452 !important;
+    border-right: 2px solid #FF7452 !important;
     border-bottom: 1px solid #FF7452 !important;
 }
-@media screen and (max-width: 420px) {
-    .nav-item {
-        font-size: 16px;
-        padding: 3px;
-    }
 
-    .nav-link {
-        padding: 5px 10px;
-    }
-}
-@media screen and (max-width: 395px) {
+@media screen and (max-width: 580px) {
+
     .nav-item {
         font-size: 14px;
-        padding: 3px;
     }
 
-    .nav-link {
-        padding: 5px 10px;
-    }
 }
-@media screen and (max-width: 365px) {
+
+@media screen and (max-width: 510px) {
+
     .nav-item {
         font-size: 13px;
-        padding: 3px;
     }
 
-    .nav-link {
-        padding: 5px 10px;
-    }
 }
-@media screen and (max-width: 355px) {
-    .hid {
-        display: none;
-    }
-}
-@media screen and (max-width: 345px) {
+
+@media screen and (max-width: 485px) {
+
     .nav-item {
-        font-size: 12px;
-        padding: 3px;
+        font-size: 10px;
     }
 
-    .nav-link {
-        padding: 5px 10px;
+}
+
+
+@media screen and (max-width: 425px) {
+    .nav-item {
+        font-size: 9px;
     }
 }
+
+
+
 /* END */
 </style>
