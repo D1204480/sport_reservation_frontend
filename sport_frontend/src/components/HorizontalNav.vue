@@ -27,6 +27,10 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <style>
+.nav-item {
+    font-size: 18px;
+}
+
 .nav {
     border-bottom: 2px solid #FF7452 !important;
     /* 下方加橘色線條 */
@@ -36,21 +40,15 @@ import { RouterLink } from 'vue-router';
 .nav-link {
     color: black !important;
     /* 非 active 的狀態 */
-
 }
 
 .nav-link.active {
-
-
     color: rgb(255, 255, 255) !important;
     background-color: #FF7452 !important;
     border-top: 2px solid #FF7452 !important;
     border-left: 2px solid #FF7452 !important;
     border-right: 2px solid #FF7452 !important;
     border-bottom: 1px solid #FF7452 !important;
-
-
-
 }
 
 .nav-link:hover {
@@ -64,7 +62,7 @@ import { RouterLink } from 'vue-router';
 @media screen and (max-width: 580px) {
 
     .nav-item {
-        font-size: 14px;
+        font-size: 15px;
     }
 
 }

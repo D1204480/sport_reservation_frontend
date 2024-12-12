@@ -11,7 +11,7 @@ import HorizontalCard from '@/components/HorizontalNav.vue'
     <div class="home-container">
         <!-- 最新消息區塊 -->
         <section class="news-list">
-            <h2 class="section-title">最新消息</h2>
+            <h3 class="section-title">最新消息</h3>
             <a v-for="news in newsItems" :key="news.date" :href="news.link" class="news-item">
                 <span class="news-date">{{ news.date }}</span>
                 <span class="news-title">{{ news.title }}</span>
@@ -20,7 +20,7 @@ import HorizontalCard from '@/components/HorizontalNav.vue'
 
         <!-- 運動紀事輪播 -->
         <section>
-            <h2 class="section-title">運動紀事</h2>
+            <h3 class="section-title">運動紀事</h3>
             <div class="carousel-container">
                 <div class="carousel" ref="carousel">
                     <div v-for="(slide, index) in carouselSlides" :key="index" class="carousel-item">
@@ -102,7 +102,7 @@ export default {
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
