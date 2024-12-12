@@ -40,18 +40,21 @@ import { RouterLink } from 'vue-router';
 }
 
 .nav-link.active {
-    color: black !important;
+
+
+    color: rgb(255, 255, 255) !important;
+    background-color: #FF7452 !important;
     border-top: 2px solid #FF7452 !important;
     border-left: 2px solid #FF7452 !important;
     border-right: 2px solid #FF7452 !important;
-    border-bottom: 1px solid rgb(255, 255, 255) !important;
+    border-bottom: 1px solid #FF7452 !important;
+
+
 
 }
 
 .nav-link:hover {
-
-    color: rgb(255, 255, 255) !important;
-    background-color: #FF7452 !important;
+    color: black !important;
     border-top: 2px solid #FF7452 !important;
     border-left: 2px solid #FF7452 !important;
     border-right: 2px solid #FF7452 !important;

@@ -48,7 +48,7 @@ const toggleMenu = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1rem;
+  padding: 1.5rem 0.5rem;
   background-color: rgb(249, 249, 249);
   position: relative;
 }
