@@ -12,8 +12,18 @@
 
 <template>
    <div class="reservation">
-    <h1>This is an reservation page</h1>
+    <h3>運動種類</h3>
   </div>
   
   <SportsFacilities />
 </template>
+
+<style>
+  .reservation {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 40px 0px 10px 0px;
+}
+
+</style>

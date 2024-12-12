@@ -29,10 +29,10 @@ import { RouterLink } from 'vue-router';
     font-size: 18px;
 }
 
-.nav {
-    border-bottom: 2px solid #FF7452 !important;
-    /* 下方加橘色線條 */
 
+.nav-tabs {
+    --bs-nav-tabs-border-width: 2px !important;
+    --bs-nav-tabs-border-color: #FF7452 ;
 }
 
 .nav-link {
@@ -41,15 +41,17 @@ import { RouterLink } from 'vue-router';
 }
 
 .nav-link.active {
-    color: rgb(255, 255, 255) !important;
-    background-color: #FF7452 !important;
+    background: rgb(249, 249, 249)!important;
     border-top: 2px solid #FF7452 !important;
     border-left: 2px solid #FF7452 !important;
     border-right: 2px solid #FF7452 !important;
-    border-bottom: 1px solid #FF7452 !important;
+    border-bottom: 2px solid rgb(249, 249, 249) !important;
+
 }
 
 .nav-link:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: #FF7452 !important;
     border-top: 2px solid #FF7452 !important;
     border-left: 2px solid #FF7452 !important;
     border-right: 2px solid #FF7452 !important;
