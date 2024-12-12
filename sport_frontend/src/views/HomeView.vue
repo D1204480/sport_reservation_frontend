@@ -116,23 +116,6 @@ export default {
   },
 
   methods: {
-    // scrollCarousel(direction) {
-    //   const itemWidth = this.$refs.carousel.offsetWidth / 3; // For 3 items view
-
-    //   if (direction === 'next') {
-    //     this.currentPosition -= itemWidth;
-    //     // Reset if reached end
-    //     if (this.currentPosition < -(itemWidth * (this.carouselSlides.length - 3))) {
-    //       this.currentPosition = 0;
-    //     }
-    //   } else {
-    //     this.currentPosition += itemWidth;
-    //     // Reset if reached start
-    //     if (this.currentPosition > 0) {
-    //       this.currentPosition = -(itemWidth * (this.carouselSlides.length - 3));
-    //     }
-    //   }
-    // },
     nextSlide() {
       if (this.currentIndex >= this.carouselSlides.length - 1) {
         this.currentIndex = 0;
