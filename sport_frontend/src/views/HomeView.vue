@@ -19,23 +19,42 @@ import HorizontalCard from '@/components/HorizontalNav.vue'
     </section>
 
     <!-- 運動紀事輪播 -->
-    <section>
+    <!-- <section>
       <h2 class="section-title">運動紀事</h2>
       <div class="carousel-container">
         <div class="carousel-wrapper">
-          <!-- 主要輪播區域 -->
+          主要輪播區域
           <div class="carousel" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
             <div v-for="(slide, index) in carouselSlides" :key="index" class="carousel-item">
               <img :src="slide.image" :alt="slide.alt">
             </div>
           </div>
         </div>
-        <!-- 導航按鈕 -->
+        導航按鈕
         <button class="carousel-nav carousel-prev" @click="prevSlide">←</button>
         <button class="carousel-nav carousel-next" @click="nextSlide">→</button>
       </div>
+    </section> -->
+    <section>
+      <h2 class="section-title">運動紀事</h2>
+      <div class="carousel-container" 
+           @mouseenter="pauseAutoPlay" 
+           @mouseleave="startAutoPlay">
+        <div class="carousel-wrapper">
+          <div class="carousel" :style="carouselStyle">
+            <div v-for="(slide, index) in carouselSlides" 
+                 :key="index" 
+                 class="carousel-item">
+              <img :src="slide.image" :alt="slide.alt">
+            </div>
+          </div>
+        </div>
+        <button class="carousel-nav carousel-prev" 
+                @click="prevSlide">←</button>
+        <button class="carousel-nav carousel-next" 
+                @click="nextSlide">→</button>
+      </div>
     </section>
-
   </div>
 
 
@@ -51,6 +70,8 @@ export default {
   data() {
     return {
       currentIndex: 0,
+      autoPlayInterval: null,
+      autoPlayDelay: 3000, // 3秒切換一次
       newsItems: [
         {
           date: '2024-10-22',
@@ -85,6 +106,15 @@ export default {
     }
   },
 
+  computed: {
+    carouselStyle() {
+      return {
+        transform: `translateX(-${this.currentIndex * (100 / 3)}%)`,
+        transition: 'transform 0.5s ease'
+      }
+    }
+  },
+
   methods: {
     // scrollCarousel(direction) {
     //   const itemWidth = this.$refs.carousel.offsetWidth / 3; // For 3 items view
@@ -104,19 +134,38 @@ export default {
     //   }
     // },
     nextSlide() {
-      if (this.currentIndex < this.carouselSlides.length - 1) {
-        this.currentIndex++;
-      } else {
+      if (this.currentIndex >= this.carouselSlides.length - 1) {
         this.currentIndex = 0;
+      } else {
+        this.currentIndex++;
       }
     },
     prevSlide() {
-      if (this.currentIndex > 0) {
-        this.currentIndex--;
-      } else {
+      if (this.currentIndex <= 0) {
         this.currentIndex = this.carouselSlides.length - 1;
+      } else {
+        this.currentIndex--;
+      }
+    },
+    startAutoPlay() {
+      if (!this.autoPlayInterval) {
+        this.autoPlayInterval = setInterval(this.nextSlide, this.autoPlayDelay);
+      }
+    },
+    pauseAutoPlay() {
+      if (this.autoPlayInterval) {
+        clearInterval(this.autoPlayInterval);
+        this.autoPlayInterval = null;
       }
     }
+  },
+
+  mounted() {
+    this.startAutoPlay();
+  },
+
+  beforeUnmount() {
+    this.pauseAutoPlay();
   }
 }
 </script>
@@ -167,43 +216,31 @@ export default {
 }
 
 /* 運動紀事輪播 */
-/* .carousel-container {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-} */
 .carousel-container {
   position: relative;
   width: 100%;
   min-height: 300px;
   overflow: hidden;
-  /* Add this */
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   /* Add this for debugging */
 }
 .carousel-wrapper {
-  /* position: relative; */
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-/* .carousel {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  Firefox
-  -ms-overflow-style: none;
-  IE and Edge
-} */
 .carousel {
   display: flex;
   gap: 1rem;
+  width: 300%; /* 重要：設置為項目數量的百分比 */
   transition: transform 0.5s ease;
-  /* Add smooth transition */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
 
 .carousel::-webkit-scrollbar {
@@ -211,27 +248,17 @@ export default {
   /* Chrome, Safari, Opera */
 }
 
-/* .carousel-item {
-  flex: 0 0 auto;
-  width: calc(33.333% - 0.667rem);
+.carousel-item {
+  flex: 0 0 calc(33.333% - 0.667rem);
   aspect-ratio: 4/3;
   scroll-snap-align: start;
-
-  border: 1px solid red; Add this to debug
-  background: #eee;      Add this to debug
-} */
-.carousel-item {
-  flex: 0 0 auto;
-  width: calc(33.333% - 0.667rem);
+  /* width: calc(33.333% - 0.667rem); */
   height: 300px;
-  /* Change min-height to fixed height */
-  border: 2px solid green;
+  /* border: 2px solid green; */
   display: flex;
-  /* Add this */
   align-items: center;
-  /* Add this */
   justify-content: center;
-  /* Add this */
+  padding: 0 0.5rem;
 }
 
 .carousel-item img {
@@ -240,21 +267,6 @@ export default {
   object-fit: cover;
 }
 
-/* .carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-} */
 .carousel-nav {
   position: absolute;
   top: 50%;
