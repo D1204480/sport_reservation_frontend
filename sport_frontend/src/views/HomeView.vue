@@ -101,6 +101,18 @@ export default {
         {
           image: '/carousel/s03.png',
           alt: '攀岩'
+        },
+        {
+          image: '/carousel/s04.png',
+          alt: 'whiteDog'
+        },
+        {
+          image: '/carousel/s05.png',
+          alt: 'YellowDog'
+        },
+        {
+          image: '/carousel/s06.png',
+          alt: 'cat'
         }
       ]
     }
@@ -108,8 +120,10 @@ export default {
 
   computed: {
     carouselStyle() {
+      // 計算每次移動的百分比，總寬度除以要顯示的圖片數量
+      const movePercentage = 100 / 3;
       return {
-        transform: `translateX(-${this.currentIndex * (100 / 3)}%)`,
+        transform: `translateX(-${this.currentIndex * movePercentage}%)`,
         transition: 'transform 0.5s ease'
       }
     }
@@ -117,7 +131,8 @@ export default {
 
   methods: {
     nextSlide() {
-      if (this.currentIndex >= this.carouselSlides.length - 1) {
+      // 最後4張時重置到開頭
+      if (this.currentIndex >= this.carouselSlides.length - 4) {
         this.currentIndex = 0;
       } else {
         this.currentIndex++;
@@ -125,7 +140,7 @@ export default {
     },
     prevSlide() {
       if (this.currentIndex <= 0) {
-        this.currentIndex = this.carouselSlides.length - 1;
+        this.currentIndex = this.carouselSlides.length - 3;
       } else {
         this.currentIndex--;
       }
@@ -216,7 +231,7 @@ export default {
 .carousel {
   display: flex;
   gap: 1rem;
-  width: 300%; /* 重要：設置為項目數量的百分比 */
+  width: 200%; /* 要容納 6 張圖片，同時顯示 3 張，所以設為 200% */
   transition: transform 0.5s ease;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -232,8 +247,8 @@ export default {
 }
 
 .carousel-item {
-  flex: 0 0 calc(33.333% - 0.667rem);
-  aspect-ratio: 4/3;
+  flex: 0 0 16.666%; /* 100% / 6 張圖片 */
+  /* aspect-ratio: 4/3; */
   scroll-snap-align: start;
   /* width: calc(33.333% - 0.667rem); */
   height: 300px;
