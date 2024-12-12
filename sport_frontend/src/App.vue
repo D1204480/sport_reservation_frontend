@@ -1,7 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import NavBar from '@/components/NavBar.vue';
-import HorizontalNav from '@/components/HorizontalNav.vue';
 import Foot from '@/components/Foot.vue';
 
 
@@ -14,7 +13,9 @@ import Foot from '@/components/Foot.vue';
     <div class="main-content">
 
       <NavBar />
-      <HorizontalNav />
+      
+      <!-- <RouterLink/> -->
+      <RouterView/>
 
     </div>
 
