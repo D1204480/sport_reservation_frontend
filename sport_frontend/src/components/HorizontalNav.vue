@@ -3,19 +3,19 @@
     <div class="container-fluid fs-6">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link link-success active" href="#">首頁</a>
+                <RouterLink to="/" class="nav-link link-success active" >首頁</RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink to="/AboutView" class="nav-link link-success" aria-current="page">樓層介紹</RouterLink>
+                <RouterLink to="/about" class="nav-link link-success" aria-current="page">樓層介紹</RouterLink>
             </li>
             <li class="nav-item">
-                <a class="nav-link link-success " href="menu.html">場地預約</a>
+                <RouterLink class="nav-link link-success " >場地預約</RouterLink>
             </li>
             <li class="nav-item">
-                <a class="nav-link link-success" href="#">交通資訊</a>
+                <RouterLink class="nav-link link-success" >交通資訊</RouterLink>
             </li>
             <li class="nav-item">
-                <a class="nav-link link-success" href="#">無障礙設施</a>
+                <RouterLink class="nav-link link-success" >無障礙設施</RouterLink>
             </li>
         </ul>
     </div>
