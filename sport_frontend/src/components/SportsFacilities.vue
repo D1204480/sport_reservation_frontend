@@ -60,7 +60,7 @@ export default {
   methods: {
     goToCardView(sport) {
       this.$router.push({
-        name: 'CardView',
+        name: 'cardInfoView',
         params: { 
           id: sport.id,
           sportData: sport

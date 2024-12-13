@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'CardView',
+  name: 'cardInfoView',
   created() {
     const { id, sportData } = this.$route.params;
     // 使用傳遞的數據

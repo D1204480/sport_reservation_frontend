@@ -34,7 +34,7 @@ export default {
         const route = useRoute();
         
         const isReservationActive = computed(() => {
-            return route.path === '/reservation' || route.path.includes('/cardView/');
+            return route.path === '/reservation' || route.path.includes('/cardInfoView/');
         });
 
         return {

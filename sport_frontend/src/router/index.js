@@ -3,7 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import ReservationView from '../views/ReservationView.vue'
 import TrafficView from '../views/TrafficView.vue'
-import CardView from '../views/CardView.vue'
+import Accessibility from '@/views/Accessibility.vue'
+import CardInfoView from '../views/CardInfoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,9 +30,14 @@ const router = createRouter({
       component: TrafficView
     },
     {
-      path: '/cardView/:id',
-      name: 'CardView',
-      component: CardView
+      path: '/accessibility',
+      name: 'accessibility',
+      component: Accessibility
+    },
+    {
+      path: '/cardInfoView/:id',
+      name: 'cardInfoView',
+      component: CardInfoView
     }
   ]
 })
