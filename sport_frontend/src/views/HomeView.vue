@@ -1,12 +1,5 @@
-<script setup>
-
-
-</script>
 
 <template>
-  <div>
-    <HorizontalCard />
-  </div>
 
   <div class="home-container">
     <!-- 最新消息區塊 -->
@@ -63,9 +56,6 @@
 <script>
 export default {
   name: 'HomeView',
-  components: {
-    HorizontalCard
-  },
 
   data() {
     return {
