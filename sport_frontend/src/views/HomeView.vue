@@ -251,7 +251,7 @@ export default {
   /* aspect-ratio: 4/3; */
   scroll-snap-align: start;
   /* width: calc(33.333% - 0.667rem); */
-  height: 300px;
+  /* height: 300px; */
   /* border: 2px solid green; */
   display: flex;
   align-items: center;
