@@ -95,8 +95,8 @@ export default {
 }
 
 @media screen and (max-width: 425px) {
-    .nav-item {
-        font-size: 9px;
-    }
+  .nav-item {
+    font-size: 9px;
+  }
 }
 </style>
