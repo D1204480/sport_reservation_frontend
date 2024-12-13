@@ -70,7 +70,7 @@ export default {
         },
         {
           date: '2024-10-08',
-          title: '「2024臺中國際賽車展演趣味問答遊戲」得獎名單公告',
+          title: '「2024臺中國際賽車展問答遊戲」得獎名單公告',
           link: '#'
         },
         {
@@ -192,6 +192,7 @@ export default {
   border-radius: 4px;
   text-decoration: none;
   color: inherit;
+  font-size: 18px;
 }
 
 .news-date {

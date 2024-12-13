@@ -59,7 +59,7 @@ const toggleMenu = () => {
 }
 
 .brand-title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 0.2rem;
 }
 

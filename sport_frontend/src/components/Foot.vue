@@ -50,6 +50,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+ 
   }
   
   .footer-links {
@@ -75,14 +76,14 @@
   .footer-address {
     color: #666;
     margin: 10px 0;
-    font-size: 14px;
+    font-size: 16px;
     padding: 0 10px;
     word-break: break-all;
   }
   
   .footer-browser {
     color: #666;
-    font-size: 14px;
+    font-size: 16px;
     padding: 0 10px;
   }
   
