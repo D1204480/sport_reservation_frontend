@@ -58,7 +58,7 @@ export default {
             ],
             carouselSlides: [
                 {
-                    image: '/carousel/s01.png',
+                    image: '/carousel/s04.svg',
                     alt: '瑜珈運動'
                 },
                 {
@@ -154,8 +154,9 @@ export default {
 
 .carousel-item {
   flex: 0 0 auto;
-  width: calc(33.333% - 0.667rem);
-  aspect-ratio: 4/3;
+  display: flex;
+  width: calc(33.333% - 0.667rem); 
+  aspect-ratio:3/4;
   scroll-snap-align: start;
 }
 
