@@ -247,7 +247,7 @@ export default {
 }
 
 .carousel-item {
-  flex: 0 0 16.666%; /* 100% / 6 張圖片 */
+  flex: 0 0 16.666%; /* 100%/6張圖片 */
   aspect-ratio: 4/3;
   scroll-snap-align: start;
   /* width: calc(33.333% - 0.667rem); */
