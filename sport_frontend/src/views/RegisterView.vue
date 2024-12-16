@@ -489,7 +489,7 @@ input[type="password"]::placeholder {
 
 .send-code-btn {
   padding: 8px 12px;
-  background-color: #019ee7;
+  background-color: #FF7452;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -513,7 +513,7 @@ input[type="password"]::placeholder {
 .submit-btn {
   width: 100%;
   padding: 12px;
-  background-color: #019ee7;
+  background-color: #FF7452;
   color: #fff;
   font-size: 16px;
   border: none;
@@ -522,8 +522,9 @@ input[type="password"]::placeholder {
   margin-top: 20px;
 }
 
+.send-code-btn:hover,
 .submit-btn:hover {
-  background-color: #0074a9;
+  background-color: #FF6242;
 }
 
 
