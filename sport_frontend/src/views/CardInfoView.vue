@@ -1,11 +1,7 @@
-
-
-
-
 <template>
   <div class="container">
     <div class="image-container">
-      <img src="/sports/01.svg" alt="籃球場">
+      <ImageGallery :images="images" />
     </div>
     
     <div class="info-container">
@@ -42,55 +38,60 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CardInfoView',
-  created() {
-    const { id, sportData } = this.$route.params;
-    // 使用傳遞的數據
-  },
-  data() {
-    return {
-      businessHours: {
-        title: '營業時間',
-        time: '每日06:00-22:00'
-      },
-      pricing: {
-        title: '收費標準',
-        items: [
-          {
-            title: '全場租用',
-            subtitle: '一面籃球全場',
-            details: [
-              '體育性活動：【例如:員工運動會,團康活動,趣味競賽,運動比賽】',
-              '尖峰時段：每面2,000元/小時。(平日1800-2200；假日1200-2200)',
-              '離峰時段：每面1,500元/小時。(平日0600-1800；假日0600-1200)'
-            ]
-          },
-          {
-            details: [
-              '商業性活動：4,000元/小時。(行銷公司、顧問公司等代辦公司，以商業活動計)'
-            ]
-          },
-          {
-            title: '籃球活動',
-            details: [
-              '尖峰時段：每面1,500元/時(平日1800-2200；假日1200-2200)',
-              '離峰時段：每面1,000元/時(平日0600-1800；假日0600-1200)'
-            ]
-          },
-          {
-            title: '租借服務',
-            details: [
-              '籃球：50元/次(球具損壞需照價賠償)'
-            ]
-          }
-        ]
-      },
-      note: '※身心障礙者預約場地，若經本中心發現將場地轉租或非本人使用，將暫停其預約使用權一個月。'
+<script setup>
+import { defineProps, ref } from 'vue'
+import ImageGallery from '../components/ImageGallery.vue'
+
+// 圖片數組
+const images = ref([
+  '/sports/bs01.png',
+  '/sports/bs02.png',
+  '/sports/bs03.png',
+  '/sports/bs04.png',
+  '/sports/bs05.png',
+  '/sports/bs06.png'
+])
+
+// 數據
+const businessHours = ref({
+  title: '營業時間',
+  time: '每日06:00-22:00'
+})
+
+const pricing = ref({
+  title: '收費標準',
+  items: [
+    {
+      title: '全場租用',
+      subtitle: '一面籃球全場',
+      details: [
+        '體育性活動：【例如:員工運動會,團康活動,趣味競賽,運動比賽】',
+        '尖峰時段：每面2,000元/小時。(平日1800-2200；假日1200-2200)',
+        '離峰時段：每面1,500元/小時。(平日0600-1800；假日0600-1200)'
+      ]
+    },
+    {
+      details: [
+        '商業性活動：4,000元/小時。(行銷公司、顧問公司等代辦公司，以商業活動計)'
+      ]
+    },
+    {
+      title: '籃球活動',
+      details: [
+        '尖峰時段：每面1,500元/時(平日1800-2200；假日1200-2200)',
+        '離峰時段：每面1,000元/時(平日0600-1800；假日0600-1200)'
+      ]
+    },
+    {
+      title: '租借服務',
+      details: [
+        '籃球：50元/次(球具損壞需照價賠償)'
+      ]
     }
-  }
-}
+  ]
+})
+
+const note = ref('※身心障礙者預約場地，若經本中心發現將場地轉租或非本人使用，將暫停其預約使用權一個月。')
 </script>
 
 <style scoped>
@@ -112,15 +113,6 @@ export default {
 .image-container {
   flex: 1;
   min-width: 0;
-}
-
-.image-container img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  aspect-ratio: 4/3;
-  object-fit: cover;
 }
 
 .info-container {
