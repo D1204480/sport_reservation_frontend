@@ -59,7 +59,7 @@ const toggleMenu = () => {
 }
 
 .brand-title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-bottom: 0.2rem;
 }
 
@@ -77,7 +77,7 @@ const toggleMenu = () => {
 .register-btn {
   text-decoration: none;
   color: #333;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 
@@ -87,7 +87,7 @@ const toggleMenu = () => {
   padding: 0.5rem 1.5rem;
   border-radius: 4px;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .login-btn:hover {

@@ -46,7 +46,7 @@ export default {
 
 <style>
 .nav-item {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .nav-tabs {

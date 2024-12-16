@@ -104,7 +104,7 @@ export default {
 
 .sport-title {
   margin-top: 22px;
-  font-size: 24px;
+  font-size: 20px;
   color: #333;
 }
 
