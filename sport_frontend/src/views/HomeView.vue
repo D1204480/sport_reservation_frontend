@@ -172,7 +172,7 @@ export default {
 }
 
 .section-title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -192,7 +192,7 @@ export default {
   border-radius: 4px;
   text-decoration: none;
   color: inherit;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .news-date {
