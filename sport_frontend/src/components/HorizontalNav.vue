@@ -45,7 +45,10 @@
   const route = useRoute()
   
   const isReservationActive = computed(() => {
-    return route.path === '/reservation' || route.path.includes('/cardInfoView/')
+    console.log('Current route path:', route.path);
+    return route.path === '/reservation' || 
+    route.path.includes('/cardInfoView/') ||
+    route.path.includes('/bookingCardView')
   })
   </script>
   
