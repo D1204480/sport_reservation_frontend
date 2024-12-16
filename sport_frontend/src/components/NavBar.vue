@@ -5,7 +5,7 @@
       <div class="brand-subtitle">Sports Center</div>
     </a>
     <div class="auth-buttons">
-      <a href="#" class="register-btn">註冊</a>
+      <RouterLink to="/register" href="#" class="register-btn">註冊</RouterLink>
       <a href="#" class="login-btn">登入</a>
     </div>
     <button 
@@ -21,7 +21,7 @@
       class="mobile-menu"
       :class="{ active: isMenuOpen }"
     >
-      <a href="#" class="register-btn">註冊</a>
+      <RouterLink to="/register" class="register-btn">註冊</RouterLink>
       <a href="#" class="login-btn">登入</a>
     </div>
   </nav>
