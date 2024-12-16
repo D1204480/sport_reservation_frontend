@@ -1,9 +1,13 @@
 <template>
+
+  <div class="pageTitle">
+    <h3>籃球場</h3>
+  </div>
   <div class="container">
     <div class="image-container">
       <ImageGallery :images="images" />
     </div>
-    
+
     <div class="info-container">
       <div class="section">
         <div class="section-title">
@@ -29,17 +33,28 @@
             </p>
           </div>
         </div>
-        
+
         <div class="note">
           {{ note }}
         </div>
       </div>
     </div>
   </div>
+
+  <div class="button-group">
+    <button class="back-button" @click="router.back()">
+      回上一頁
+    </button>
+    <button class="book-button" @click="router.push('/bookingCard')">
+      前往預約
+    </button>
+  </div>
 </template>
 
 <script setup>
 import { defineProps, ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 import ImageGallery from '../components/ImageGallery.vue'
 
 // 圖片數組
@@ -99,6 +114,14 @@ const note = ref('※身心障礙者預約場地，若經本中心發現將場�
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* 標題 */
+.pageTitle {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 40px 0px 10px 0px;
 }
 
 .container {
@@ -189,6 +212,59 @@ h2 {
   margin-top: 24px;
   border-top: 1px solid #eee;
   line-height: 1.5;
+}
+
+/* 按鈕樣式 */
+
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.back-button,
+.book-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.back-button {
+  background-color: white;
+  border: 1px solid #333;
+  color: #333;
+}
+
+.back-button:hover {
+  background-color: #f5f5f5;
+}
+
+.book-button {
+  background-color: #FF6242;
+  border: none;
+  color: white;
+}
+
+.book-button:hover {
+  background-color: #ff4f2b;
+}
+
+/* 在你現有的媒體查詢中加入 */
+@media screen and (max-width: 768px) {
+  .button-group {
+    flex-direction: column;
+    padding: 0 16px;
+  }
+
+  .back-button,
+  .book-button {
+    width: 100%;
+    padding: 14px;
+  }
 }
 
 /* 1024px - 1200px 的螢幕 */

@@ -11,7 +11,7 @@
 </script>
 
 <template>
-   <div class="reservation">
+   <div class="pageTitle">
     <h3>運動種類</h3>
   </div>
   
@@ -19,7 +19,7 @@
 </template>
 
 <style>
-  .reservation {
+  .pageTitle {
   display: flex;
   justify-content: center;
   text-align: center;
