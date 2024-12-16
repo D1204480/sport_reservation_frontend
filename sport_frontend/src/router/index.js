@@ -5,6 +5,7 @@ import ReservationView from '../views/ReservationView.vue'
 import TrafficView from '../views/TrafficView.vue'
 import Accessibility from '@/views/Accessibility.vue'
 import CardInfoView from '../views/CardInfoView.vue'
+import RegisterView from '../views/RegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,6 +19,11 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutView
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
     },
     {
       path: '/reservation',
