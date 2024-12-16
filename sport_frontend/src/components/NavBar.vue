@@ -6,21 +6,17 @@
     </a>
     <div class="auth-buttons">
       <RouterLink to="/register" href="#" class="register-btn">註冊</RouterLink>
-      <a href="#" class="login-btn">登入</a>
+      <!-- <a href="#" class="">登入</a> -->
+      <button type="button" class="btn login-btn me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+        登入
+      </button>
     </div>
-    <button 
-      class="hamburger" 
-      :class="{ active: isMenuOpen }"
-      @click="toggleMenu"
-    >
+    <button class="hamburger" :class="{ active: isMenuOpen }" @click="toggleMenu">
       <span></span>
       <span></span>
       <span></span>
     </button>
-    <div 
-      class="mobile-menu"
-      :class="{ active: isMenuOpen }"
-    >
+    <div class="mobile-menu" :class="{ active: isMenuOpen }">
       <RouterLink to="/register" class="register-btn">註冊</RouterLink>
       <a href="#" class="login-btn">登入</a>
     </div>
@@ -29,8 +25,10 @@
 
 <script setup>
 import { ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router'
 
 const isMenuOpen = ref(false);
+const router = useRouter()
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
@@ -117,7 +115,7 @@ const toggleMenu = () => {
   top: 100%;
   right: 0;
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 200px;
   padding: 1rem;
 }
