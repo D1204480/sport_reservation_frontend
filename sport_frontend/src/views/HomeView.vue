@@ -192,7 +192,7 @@ export default {
   border-radius: 4px;
   text-decoration: none;
   color: inherit;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .news-date {
