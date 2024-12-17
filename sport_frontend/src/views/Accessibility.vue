@@ -30,7 +30,7 @@
         <section class="location-map">
           <h2>設施位置圖</h2>
           <div class="map-container">
-            <!-- 地圖容器 -->
+            <img src="/floor/map.png" alt="">
           </div>
         </section>
 
