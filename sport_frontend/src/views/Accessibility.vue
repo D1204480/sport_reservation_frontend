@@ -124,7 +124,7 @@ const facilities = ref([
 }
 
 .facility-card {
-  background: #fff;
+  background: #eaeaea;
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -163,7 +163,7 @@ const facilities = ref([
 }
 
 .facility-icon {
-  color: #95b8b8;
+  color: #89abab;
   font-size: 1.8rem;
 }
 
