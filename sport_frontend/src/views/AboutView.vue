@@ -86,49 +86,62 @@ export default {
           facilities: ['服務台', '置物櫃區', '休息區', '飲水機'],
           openingHours: '週一至週日 06:00-22:00',
           images: [
-            '/sports/bs01.png',
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500'
+            '/floor/101.jpg',
+            '/floor/102.jpg',
+            '/floor/103.png',
+            '/floor/104.jpg'
           ]
         },
         {
           id: 2,
-          name: '2F - 重訓區',
-          description: '二樓為重量訓練區域，配備完整的重訓器材及有氧器材。',
-          facilities: ['重訓區', '有氧器材區', '更衣室', '淋浴間'],
+          name: '2F - 綜合球場區',
+          description: '二樓為綜合球場區域，配有籃球場、排球場及桌球室。',
+          facilities: ['休息區', '飲水機', '更衣室', '淋浴間'],
           openingHours: '週一至週日 06:00-22:00',
           images: [
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500'
+            '/floor/201.png',
+            '/floor/202.png',
+            '/floor/203.png',
+            '/floor/204.png'
           ]
         },
         {
           id: 3,
-          name: '3F - 多功能球場',
-          description: '三樓設有多個專業教室，提供各種課程活動使用。',
-          facilities: ['瑜珈教室', '舞蹈教室', '飛輪教室', '休息區'],
-          openingHours: '依課程時間',
+          name: '3F - 羽毛球場區',
+          description: '三樓設有羽球場(6面)，提供羽球教學課程。',
+          facilities: ['休息區', '飲水機', '更衣室', '淋浴間'],
+          openingHours: '週一至週日 06:00-22:00',
           images: [
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500'
+            '/floor/302.jpg',
+            '/floor/301.jpg',
+            '/floor/303.jpg',
+            '/floor/304.jpg'
           ]
         },
         {
           id: 4,
-          name: '4F - 游泳池',
-          description: '四樓為室內溫水游泳池，配備專業水療設施。',
+          name: '4F - 多功能教室',
+          description: '四樓設有多個專業教室，提供各種課程活動使用。',
+          facilities: ['重訓室', '舞蹈教室', '飛輪教室', '休息區'],
+          openingHours: '依課程時間',
+          images: [
+            '/floor/401.png',
+            '/floor/402.png',
+            '/floor/403.png',
+            '/floor/404.png'
+          ]
+        },
+        {
+          id: 5,
+          name: '5F - 室內游泳池',
+          description: '五樓為室內溫水游泳池，配備專業水療設施。',
           facilities: ['25米溫水游泳池', '兒童池', 'SPA池', '蒸氣室'],
           openingHours: '週一至週日 06:00-21:30',
           images: [
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500',
-            '/api/placeholder/800/500'
+            '/floor/501.png',
+            '/floor/502.jpg',
+            '/floor/503.jpg',
+            '/floor/504.jpg'
           ]
         }
       ]
@@ -334,7 +347,7 @@ export default {
 
 /* 右側資訊區域 */
 .info-card, .facilities, .opening-hours {
-  background-color: #f8f8f8;
+  background-color: #eaeaea;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 0;
@@ -357,7 +370,7 @@ export default {
 }
 
 .opening-hours {
-  background-color: #f8f8f8;
+  background-color: #eaeaea;
   border-radius: 5px;
 }
 
