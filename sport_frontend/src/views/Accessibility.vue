@@ -1,7 +1,7 @@
 <!-- AccessibilityFacilities.vue -->
 <template>
   <div class="pageTitle">
-    <h3>運動中心無障礙設施</h3>
+    <h3>無障礙設施</h3>
   </div>
   <div class="accessibility-facilities">
 

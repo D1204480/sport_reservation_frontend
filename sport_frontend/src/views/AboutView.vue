@@ -1,16 +1,16 @@
 <!-- FloorIntroduction.vue -->
 <template>
+
+  <div class="pageTitle">
+    <h3>樓層介紹</h3>
+  </div>
   <div class="floor-container">
     <!-- 左側導航欄 -->
     <div class="sidebar">
       <h2 class="sidebar-title">樓層導覽</h2>
       <ul class="floor-list">
-        <li
-          v-for="floor in floors"
-          :key="floor.id"
-          :class="{ active: selectedFloor.id === floor.id }"
-          @click="selectFloor(floor)"
-        >
+        <li v-for="floor in floors" :key="floor.id" :class="{ active: selectedFloor.id === floor.id }"
+          @click="selectFloor(floor)">
           {{ floor.name }}
         </li>
       </ul>
@@ -20,7 +20,7 @@
     <div class="content">
       <div class="floor-info">
         <h3>{{ selectedFloor.name }}</h3>
-        
+
         <div class="floor-content-wrapper">
           <!-- 左側輪播區域 -->
           <div class="content-left">
@@ -30,15 +30,9 @@
                   <img :src="selectedFloor.images[currentImageIndex]" alt="設施圖片" class="main-image">
                 </div>
                 <div class="carousel-thumbnails">
-                  <img
-                    v-for="(image, index) in selectedFloor.images"
-                    :key="index"
-                    :src="image"
-                    :class="{ active: currentImageIndex === index }"
-                    @click="currentImageIndex = index"
-                    class="thumbnail"
-                    alt="縮圖"
-                  >
+                  <img v-for="(image, index) in selectedFloor.images" :key="index" :src="image"
+                    :class="{ active: currentImageIndex === index }" @click="currentImageIndex = index"
+                    class="thumbnail" alt="縮圖">
                 </div>
                 <button class="carousel-btn prev" @click="prevImage">&lt;</button>
                 <button class="carousel-btn next" @click="nextImage">&gt;</button>
@@ -157,13 +151,13 @@ export default {
       this.currentImageIndex = 0 // 重置圖片索引
     },
     prevImage() {
-      this.currentImageIndex = this.currentImageIndex === 0 
-        ? this.selectedFloor.images.length - 1 
+      this.currentImageIndex = this.currentImageIndex === 0
+        ? this.selectedFloor.images.length - 1
         : this.currentImageIndex - 1
     },
     nextImage() {
-      this.currentImageIndex = this.currentImageIndex === this.selectedFloor.images.length - 1 
-        ? 0 
+      this.currentImageIndex = this.currentImageIndex === this.selectedFloor.images.length - 1
+        ? 0
         : this.currentImageIndex + 1
     }
   }
@@ -171,6 +165,13 @@ export default {
 </script>
 
 <style scoped>
+.pageTitle {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 40px 0px 0px 0px;
+}
+
 /* 基礎布局 */
 .floor-container {
   display: flex;
@@ -178,8 +179,8 @@ export default {
   background-color: rgb(249, 249, 249);
   max-width: 1400px;
   margin: 0 auto;
-  padding: 24px;
-  gap: 40px; 
+  padding: 0 24px;
+  gap: 40px;
 }
 
 /* 側邊欄樣式 */
@@ -212,9 +213,12 @@ export default {
   border-radius: 5px;
   margin-bottom: 5px;
 
-  white-space: nowrap;      /* 防止文字換行 */
-  overflow: hidden;         /* 隱藏溢出內容 */
-  text-overflow: ellipsis;  /* 顯示省略號 */
+  white-space: nowrap;
+  /* 防止文字換行 */
+  overflow: hidden;
+  /* 隱藏溢出內容 */
+  text-overflow: ellipsis;
+  /* 顯示省略號 */
 }
 
 .floor-list li:hover {
@@ -346,14 +350,18 @@ export default {
 }
 
 /* 右側資訊區域 */
-.info-card, .facilities, .opening-hours {
+.info-card,
+.facilities,
+.opening-hours {
   background-color: #eaeaea;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 0;
 }
 
-.info-card h3, .facilities h3, .opening-hours h3 {
+.info-card h3,
+.facilities h3,
+.opening-hours h3 {
   color: #666;
   margin-bottom: 15px;
   font-size: 1.2em;
@@ -423,7 +431,8 @@ export default {
     gap: 24px;
   }
 
-  .content-left, .content-right {
+  .content-left,
+  .content-right {
     flex: none;
     width: 100%;
   }
@@ -509,11 +518,15 @@ export default {
     height: 50px;
   }
 
-  .info-card, .facilities, .opening-hours {
+  .info-card,
+  .facilities,
+  .opening-hours {
     padding: 16px;
   }
 
-  .info-card h3, .facilities h3, .opening-hours h3 {
+  .info-card h3,
+  .facilities h3,
+  .opening-hours h3 {
     font-size: 1.1em;
   }
 
