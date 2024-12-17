@@ -1,23 +1,26 @@
 <template>
-
   <div>
     <div class="pageTitle">
       <h3>交通資訊</h3>
     </div>
   </div>
   <div class="traffic-info-container">
-
     <!-- 左側交通資訊 -->
     <div class="info-section">
-
       <div class="info-grid">
         <div class="info-block">
-          <h2>地址資訊</h2>
+          <h2>
+            <i class="fas fa-map-marker-alt"></i>
+            地址資訊
+          </h2>
           <p>{{ address }}</p>
         </div>
 
         <div class="info-block">
-          <h2>大眾運輸</h2>
+          <h2>
+            <i class="fas fa-bus"></i>
+            大眾運輸
+          </h2>
           <h3>公車</h3>
           <ul>
             <li>300、307、324、325</li>
@@ -26,7 +29,10 @@
         </div>
 
         <div class="info-block">
-          <h2>開車資訊</h2>
+          <h2>
+            <i class="fas fa-car"></i>
+            開車資訊
+          </h2>
           <p>提供車位資訊：備有地下停車場</p>
           <ul>
             <li>國道一號：西屯交流道下往市區方向</li>
@@ -35,7 +41,10 @@
         </div>
 
         <div class="info-block">
-          <h2>營業時間</h2>
+          <h2>
+            <i class="fas fa-clock"></i>
+            營業時間
+          </h2>
           <p>週一至週日 06:00-22:00</p>
           <p>例假日照常營業</p>
         </div>
@@ -44,8 +53,15 @@
 
     <!-- 右側地圖 -->
     <div class="map-section">
-      <iframe :src="mapUrl" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""
-        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      <iframe 
+        :src="mapUrl" 
+        width="100%" 
+        height="100%" 
+        frameborder="0" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
       </iframe>
     </div>
   </div>
@@ -69,6 +85,7 @@ export default {
 </script>
 
 <style scoped>
+/* 保留原有的樣式 */
 .traffic-info-container {
   display: flex;
   min-height: 600px;
@@ -95,7 +112,6 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   height: calc(100% - 60px);
-  /* 減去標題的高度 */
 }
 
 .info-block {
@@ -108,12 +124,25 @@ export default {
   height: 100%;
 }
 
+
+
+/* 新增圖示相關樣式 */
 .info-block h2 {
   color: #2c3e50;
   margin-bottom: 0.75rem;
   font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* 稍微增加圖示和文字的間距 */
 }
 
+.info-block h2 i {
+  color: #89abab; /* 新的顏色 */
+  font-size: 1.2rem; /* 新的大小 */
+  width: auto; /* 移除固定寬度限制 */
+}
+
+/* 保留其他原有樣式 */
 .info-block h3 {
   color: #486581;
   margin: 0.75rem 0;
@@ -156,7 +185,6 @@ export default {
 
   .info-grid {
     grid-template-columns: 1fr;
-    /* 手機版改為單欄 */
     gap: 1rem;
   }
 

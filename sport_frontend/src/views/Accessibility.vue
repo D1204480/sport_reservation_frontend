@@ -135,8 +135,8 @@ const facilities = ref([
 }
 
 .facility-icon {
-  font-size: 1.5rem;
-  color: #3498db;
+  color: #89abab;
+  font-size: 1.8rem;
   min-width: 40px;
   text-align: center;
 }
@@ -162,10 +162,6 @@ const facilities = ref([
   color: #666;
 }
 
-.facility-icon {
-  color: #89abab;
-  font-size: 1.8rem;
-}
 
 /* 右欄樣式 */
 .right-column {
