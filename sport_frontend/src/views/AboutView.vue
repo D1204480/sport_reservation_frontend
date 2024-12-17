@@ -190,7 +190,7 @@ export default {
   color: rgb(39, 39, 39);
   padding: 20px;
   border-radius: 10px;
-  margin: 30px 0;
+  margin: 30px 0 30px 15px;
   font-size: large;
 }
 
