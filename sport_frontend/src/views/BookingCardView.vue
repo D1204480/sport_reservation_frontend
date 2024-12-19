@@ -115,7 +115,7 @@ const goToCourtDetail = (courtId) => {
   margin-top: 10px;
   font-weight: 500;
   color: #333;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 /* Responsive design */
