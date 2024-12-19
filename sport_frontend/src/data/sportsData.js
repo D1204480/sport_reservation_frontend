@@ -126,10 +126,10 @@ export const sportsData = {
     4: {  // 羽球
       title: '羽球場',
       images: [
-        '/sports/bd01.png',
-        '/sports/bd02.png',
-        '/sports/bd03.png',
-        '/sports/bd04.png'
+        '/sports/bd01.jpg',
+        '/sports/bd02.jpg',
+        '/sports/bd03.jpg',
+        '/sports/bd04.jpg'
       ],
       businessHours: {
         title: '營業時間',
