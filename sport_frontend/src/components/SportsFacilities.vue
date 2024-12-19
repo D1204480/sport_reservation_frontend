@@ -62,8 +62,7 @@ export default {
       this.$router.push({
         name: 'cardInfoView',
         params: { 
-          id: sport.id,
-          sportData: sport
+          id: sport.id
         }
       })
     }

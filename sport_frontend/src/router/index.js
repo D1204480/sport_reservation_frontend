@@ -7,6 +7,7 @@ import Accessibility from '@/views/Accessibility.vue'
 import CardInfoView from '../views/CardInfoView.vue'
 import BookingCardView from '../views/BookingCardView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import BookingDateView from '../views/BookingDateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/bookingCardView',
       name: 'bookingCardView',
       component: BookingCardView
+    },
+    {
+      path: '/bookingDateView',
+      name: 'bookingDateView',
+      component: BookingDateView
     }
   ]
 })

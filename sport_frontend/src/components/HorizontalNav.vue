@@ -48,7 +48,8 @@
     console.log('Current route path:', route.path);
     return route.path === '/reservation' || 
     route.path.includes('/cardInfoView/') ||
-    route.path.includes('/bookingCardView')
+    route.path.includes('/bookingCardView')|| 
+    route.path.includes('/bookingDateView')
   })
   </script>
   

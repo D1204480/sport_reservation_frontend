@@ -20,6 +20,12 @@
     </div>
   </div>
 
+  <div class="button-group">
+    <button class="back-button" @click="router.back()">
+      回上一頁
+    </button>
+  </div>
+
 </template>
 <script setup>
 import { ref } from 'vue'
@@ -61,7 +67,7 @@ const courts = ref([
 ])
 
 const goToCourtDetail = (courtId) => {
-  router.push(`/bookingDate/${courtId}`)
+  router.push(`/bookingDateView`)
 }
 </script>
 
@@ -117,6 +123,35 @@ const goToCourtDetail = (courtId) => {
   color: #333;
   font-size: 20px;
 }
+
+/* 按鈕樣式 */
+
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.back-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.back-button {
+  background-color: white;
+  border: 1px solid #333;
+  color: #333;
+}
+
+.back-button:hover {
+  background-color: #f5f5f5;
+}
+
 
 /* Responsive design */
 @media (max-width: 768px) {
