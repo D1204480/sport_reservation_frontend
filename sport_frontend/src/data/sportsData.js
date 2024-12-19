@@ -83,9 +83,9 @@ export const sportsData = {
       title: '游泳池',
       images: [
         '/sports/sw01.png',
-        '/sports/sw02.png',
-        '/sports/sw03.png',
-        '/sports/sw04.png'
+        '/sports/sw02.jpg',
+        '/sports/sw03.jpg',
+        '/sports/sw04.jpg'
       ],
       businessHours: {
         title: '營業時間',
