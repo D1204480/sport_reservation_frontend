@@ -324,21 +324,22 @@ label {
 }
 
 .button.primary {
-  background-color: #3498db;
-  color: white;
+  background-color: white;
+  border: 1px solid #333;
+  color: #333;
 }
 
 .button.primary:hover {
-  background-color: #357abd;
+  background-color: #f5f5f5;
 }
 
 .button.danger {
-  background-color: #dc3545;
+  background-color: #FF6242;
   color: white;
 }
 
 .button.danger:hover {
-  background-color: #c82333;
+  background-color: #ff4f2b;
 }
 
 @media (max-width: 600px) {
