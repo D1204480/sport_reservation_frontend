@@ -5,32 +5,33 @@
     <!-- 左側訂單資訊區域 -->
     <div class="order-info-section">
       <div class="info-card">
+        <h4>訂單資訊</h4>
+        <div class="info-item">
+          <label>訂單編號：</label>
+          <span>{{ order?.orderId }}</span>
+        </div>
         <h4>預約人資料</h4>
         <div class="info-item">
           <label>預約人：</label>
-          <span>{{ bookingData.name }}</span>
+          <span>{{ order?.name }}</span>
         </div>
         <div class="info-item">
           <label>聯絡電話：</label>
-          <span>{{ bookingData.phone }}</span>
+          <span>{{ order?.phone }}</span>
         </div>
-        <!-- <div class="info-item">
-            <label>預約場地日期：</label>
-            <span>{{ bookingData.reservationDate }}</span>
-          </div> -->
       </div>
 
       <div class="info-card">
         <h4 class="section-title">租借資訊</h4>
         <div class="section-content">
           <div class="info-item">
-            <span>預約日期：<span class="info-value">{{ bookingData.reservationDate }}</span></span>
+            <span>預約日期：<span class="info-value">{{ order?.reservationDate }}</span></span>
           </div>
           <div class="info-item">
-            <span>租借場地：<span class="info-value">{{ bookingData.venueName }}</span></span>
+            <span>租借場地：<span class="info-value">{{ order?.venueName }}</span></span>
           </div>
           <div class="info-item">
-            <span>租借類型：<span class="info-value">{{ bookingData.venueType }}</span></span>
+            <span>租借類型：<span class="info-value">{{ order?.venueType }}</span></span>
           </div>
           <div class="info-item">
             <span>預約時段：<span class="info-value">{{ formatTimeSlots }}</span></span>
@@ -39,17 +40,16 @@
             <span>租借器材：<span class="info-value">{{ formatEquipments }}</span></span>
           </div>
           <div class="info-item">
-            <span>場地費用總計：<span class="info-value">{{ bookingData.totalAmount }}元</span></span>
+            <span>場地費用總計：<span class="info-value">{{ order?.totalAmount }}元</span></span>
           </div>
         </div>
       </div>
-
 
       <div class="info-card">
         <h4>繳費方式</h4>
         <div class="info-item">
           <label>付款方式：</label>
-          <span>{{ bookingData.paymentMethod }}</span>
+          <span>{{ order?.paymentMethod }}</span>
         </div>
       </div>
     </div>
@@ -68,28 +68,21 @@
     </div>
   </div>
 
-  <p v-if="qrCodeUrl === null && latestOrder === null" class="error">
-    無法載入最新的 QR Code 或訂單資訊，請稍後再試。
-  </p>
-
   <div class="button-group">
     <button class="btn btn-book" @click="goNext">返回歷史訂單紀錄</button>
   </div>
-
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
 
-// 獲取路由參數
-const orderId = computed(() => route.params.orderId)
-
 // 訂單資料
-const bookingData = ref({
+const order = ref({
+  orderId: route.params.orderId,   // 從路由參數獲取訂單編號
   name: '王小明',
   phone: '0912345678',
   reservationDate: '2024-01-15',
@@ -101,6 +94,14 @@ const bookingData = ref({
   paymentMethod: '線上信用卡'
 })
 
+// 當 route.params.orderId 變化時更新訂單資料
+const updateOrderId = () => {
+  if (route.params.orderId) {
+    order.value.orderId = route.params.orderId
+    // 這裡可以添加根據訂單號碼獲取詳細訂單資料的 API 調用
+  }
+}
+
 // QR Code 相關
 const qrCodeUrl = ref('https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEMO123456')
 const countdown = ref(600) // 10分鐘倒數
@@ -108,17 +109,16 @@ let countdownTimer
 
 // 格式化時段顯示
 const formatTimeSlots = computed(() => {
-  return bookingData.value.timeSlots?.join('、') || '無資料'
+  return order.value.timeSlots?.join('、') || '無資料'
 })
 
 // 格式化器材顯示
 const formatEquipments = computed(() => {
-  return bookingData.value.equipments?.join('、') || '無租借器材'
+  return order.value.equipments?.join('、') || '無租借器材'
 })
 
 // 更新 QR Code
 const manualUpdateQRCode = () => {
-  // 這裡可以加入更新 QR Code 的邏輯
   qrCodeUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEMO${Date.now()}`
   countdown.value = 600 // 重置倒數時間
 }
@@ -143,13 +143,9 @@ const goNext = () => {
 }
 
 // 組件掛載時啟動倒數計時
-onMounted(async () => {
-  if (orderId.value) {
-    // 這裡可以加入加載訂單數據的邏輯
-    console.log('正在加載訂單:', orderId.value)
-  }
-
-  startCountdown();
+onMounted(() => {
+  updateOrderId()
+  startCountdown()
 })
 
 // 組件卸載時清除計時器
