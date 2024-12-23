@@ -151,10 +151,11 @@ const filteredCourts = computed(() => {
 
 const goToCourtDetail = (courtId) => {
   router.push({
-    path: `/bookingDateView/${courtId}`,
+    path: '/bookingDateView/:id',
     query: {
-      id: route.query.id,  // 保持運動ID
-      title: route.query.title  // 保持運動標題
+      id: route.query.id,  // sport id
+      title: route.query.title,  // sport title
+      courtId: courtId  // add court id
     }
   })
 }

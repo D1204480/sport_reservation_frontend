@@ -13,18 +13,12 @@
           <div v-for="weekday in weekdays" :key="weekday" class="weekday">
             {{ weekday }}
           </div>
-          <div
-            v-for="date in calendarDates"
-            :key="date.day + date.type"
-            class="date"
-            :class="{
-              'gray': date.type === 'prev' || date.type === 'next',
-              'selected': isSelectedDate(date),
-              'holiday': isHoliday(date),
-              'full': isFullyBooked(date)
-            }"
-            @click="selectDate(date)"
-          >
+          <div v-for="date in calendarDates" :key="date.day + date.type" class="date" :class="{
+            'gray': date.type === 'prev' || date.type === 'next',
+            'selected': isSelectedDate(date),
+            'holiday': isHoliday(date),
+            'full': isFullyBooked(date)
+          }" @click="selectDate(date)">
             {{ date.day }}
           </div>
         </div>
@@ -51,12 +45,7 @@
           <div v-for="section in timeSlots" :key="section.title" class="slot-section">
             <h3>{{ section.title }}</h3>
             <div v-for="slot in section.slots" :key="slot.id" class="slot-item">
-              <input
-                type="checkbox"
-                :id="slot.id"
-                v-model="slot.selected"
-                @change="updateTotalTime"
-              >
+              <input type="checkbox" :id="slot.id" v-model="slot.selected" @change="updateTotalTime">
               <label :for="slot.id">{{ slot.time }}</label>
             </div>
           </div>
@@ -76,7 +65,11 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import ProgressSteps from '../components/ProgressSteps_Jo.vue'
+
+const router = useRouter()
+const route = useRoute()
 
 // 基礎資料
 const weekdays = ['日', '一', '二', '三', '四', '五', '六']
@@ -132,12 +125,12 @@ const calendarDates = computed(() => {
   const dates = []
   const year = currentDate.value.getFullYear()
   const month = currentDate.value.getMonth()
-  
+
   // 取得當月第一天是星期幾
   const firstDay = new Date(year, month, 1).getDay()
   // 取得當月天數
   const daysInMonth = new Date(year, month + 1, 0).getDate()
-  
+
   // 上個月的日期
   const prevMonthDays = new Date(year, month, 0).getDate()
   for (let i = firstDay - 1; i >= 0; i--) {
@@ -147,7 +140,7 @@ const calendarDates = computed(() => {
       date: new Date(year, month - 1, prevMonthDays - i)
     })
   }
-  
+
   // 當月日期
   for (let i = 1; i <= daysInMonth; i++) {
     dates.push({
@@ -156,7 +149,7 @@ const calendarDates = computed(() => {
       date: new Date(year, month, i)
     })
   }
-  
+
   // 下個月的日期
   const remainingDays = 42 - dates.length
   for (let i = 1; i <= remainingDays; i++) {
@@ -166,7 +159,7 @@ const calendarDates = computed(() => {
       date: new Date(year, month + 1, i)
     })
   }
-  
+
   return dates
 })
 
@@ -207,10 +200,10 @@ const isFullyBooked = (dateObj) => {
 }
 
 const selectDate = (dateObj) => {
-  if (dateObj.type !== 'current' || 
-      isHoliday(dateObj) || 
-      isFullyBooked(dateObj)) return
-  
+  if (dateObj.type !== 'current' ||
+    isHoliday(dateObj) ||
+    isFullyBooked(dateObj)) return
+
   selectedDate.value = dateObj.date
 }
 
@@ -218,6 +211,31 @@ const updateTotalTime = () => {
   // 這裡可以添加更新總時間的邏輯
   // 如果需要與後端通信或觸發其他操作
 }
+
+const goBack = () => {
+  router.push({
+    path: '/bookingCardView',
+    query: {
+      id: route.query.id,
+      title: route.query.title
+    }
+  })
+}
+
+
+const goNext = () => {
+  router.push({
+    path: '/bookingPaymentView',
+    query: {
+      id: route.query.id,
+      title: route.query.title,
+      courtId: route.query.courtId,
+      date: formatDateString(selectedDate.value)
+      // 你可能還需要添加選擇的時段信息
+    }
+  })
+}
+
 </script>
 
 <style scoped>
@@ -239,13 +257,19 @@ body {
   background: rgb(249, 249, 249);
   padding: 30px;
   border-radius: 12px;
-  justify-content: center;  /* 新增這行 */
-  align-items: center; /* 新增這行 */
+  justify-content: center;
+  /* 新增這行 */
+  align-items: center;
+  /* 新增這行 */
 
-  flex-wrap: wrap; /* 新增：允許元素換行 */
-  max-width: 1200px; /* 新增：限制最大寬度 */
-  margin: 0 auto; /* 新增：水平置中 */
-  width: 100%; /* 新增：確保寬度響應 */
+  flex-wrap: wrap;
+  /* 新增：允許元素換行 */
+  max-width: 1200px;
+  /* 新增：限制最大寬度 */
+  margin: 0 auto;
+  /* 新增：水平置中 */
+  width: 100%;
+  /* 新增：確保寬度響應 */
 }
 
 .calendar {
@@ -254,7 +278,8 @@ body {
   margin: 20px;
   border-radius: 10px;
 
-  min-width: 400px; /* 新增：確保日曆最小寬度 */
+  min-width: 400px;
+  /* 新增：確保日曆最小寬度 */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -319,8 +344,10 @@ body {
   width: 400px;
   margin: 20px;
 
-  flex-grow: 1; /* 新增：允許彈性成長 */
-  min-width: 300px; /* 新增：設定最小寬度 */
+  flex-grow: 1;
+  /* 新增：允許彈性成長 */
+  min-width: 300px;
+  /* 新增：設定最小寬度 */
 }
 
 .time-slots h2 {
@@ -417,26 +444,32 @@ body {
     gap: 20px;
   }
 
-  .calendar, .time-slots {
-    width: 100%; /* 在較小螢幕上佔滿寬度 */
+  .calendar,
+  .time-slots {
+    width: 100%;
+    /* 在較小螢幕上佔滿寬度 */
   }
 
   .slots-container {
-    grid-template-columns: repeat(1, 1fr); /* 時段改為單欄顯示 */
+    grid-template-columns: repeat(1, 1fr);
+    /* 時段改為單欄顯示 */
     gap: 10px;
   }
 
   .legend {
-    flex-wrap: wrap; /* 讓圖例可以換行 */
+    flex-wrap: wrap;
+    /* 讓圖例可以換行 */
     justify-content: center;
   }
 
   .calendar-grid {
-    gap: 4px; /* 縮小日期間距 */
+    gap: 4px;
+    /* 縮小日期間距 */
   }
 
   .date {
-    width: 28px; /* 稍微縮小日期大小 */
+    width: 28px;
+    /* 稍微縮小日期大小 */
     height: 28px;
   }
 }
@@ -470,7 +503,8 @@ body {
 /* 新增平板尺寸的優化 */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .slots-container {
-    grid-template-columns: repeat(2, 1fr); /* 平板尺寸時改為兩欄 */
+    grid-template-columns: repeat(2, 1fr);
+    /* 平板尺寸時改為兩欄 */
   }
 
 }
