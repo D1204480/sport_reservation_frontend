@@ -37,8 +37,10 @@
       </div>
 
       <div class="button-group">
-        <button class="btn-cancel" @click="handleCancel">返回</button>
-      </div>
+    <button class="back-button" @click="router.back()">
+      回上一頁
+    </button>
+  </div>
     </div>
   </div>
 
@@ -242,6 +244,7 @@ const handleCancel = () => {
 .back-button:hover {
   background-color: #f5f5f5;
 }
+
 
 
 /* Responsive design */
