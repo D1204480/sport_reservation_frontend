@@ -1,7 +1,3 @@
-<script setup>
-import ProgressSteps from '../components/ProgressSteps_Jo.vue'
-</script>
-
 <template>
   <progress-steps :current-step="2" />
   <div class="container">
@@ -62,7 +58,7 @@ import ProgressSteps from '../components/ProgressSteps_Jo.vue'
   </div>
 </template>
 
-<script>
+<!-- <script>
 export default {
   name: 'bookingPayment',
   components: {
@@ -71,26 +67,7 @@ export default {
 
   data() {
     return {
-      bookingData: {
-        name: '',
-        phone: '',
-        applyApartment: '',
-        content: '',
-        equipmentIds: [],
-        selectedEquipments: [],
-        venueId: '',
-        venueName: '',
-        venueType: '',
-        paymentMethod: '',
-        timeSlots: [],
-        reservationDate: '',
-        totalAmount: '',
-        totalHours: 0,
-        unitPrice: 0,
-      },
-      originalQuery: null,
-      userId: '',
-      paymentMethod: ''
+      
     }
   },
 
@@ -100,11 +77,7 @@ export default {
         .map(slot => slot.time)
         .join('、')
     },
-    formatEquipments() {
-      return this.bookingData.selectedEquipments
-        .map(equipment => equipment.equipmentName)
-        .join('、')
-    }
+    
   },
 
   created() {
@@ -119,13 +92,7 @@ export default {
       }
 
       // 載入預約資料
-      const storedData = localStorage.getItem('bookingData')
-      if (storedData) {
-        this.bookingData = {
-          ...this.bookingData,
-          ...JSON.parse(storedData)
-        }
-      }
+      
     } catch (error) {
       console.error('Error loading booking data:', error)
     }
@@ -133,55 +100,15 @@ export default {
 
   methods: {
     async submitBooking() {
-      try {
-        // 準備要發送的資料格式
-        const reservationData = {
-          venueId: this.bookingData.venueId,
-          userId: this.userId,
-          timePeriodIds: this.bookingData.timeSlots.map(slot => slot.id),
-          equipmentIds: this.bookingData.selectedEquipments.map(eq => eq.id),
-          reservationDate: this.bookingData.reservationDate,
-          remark: "",
-          applyApartment: this.bookingData.applyApartment,
-          content: this.bookingData.content,
-          paymentMethod: this.bookingData.paymentMethod,
-          totalAmount: this.bookingData.totalAmount
-        }
+      
 
-        const response = await fetch('http://localhost:8080/api/reservations', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(reservationData)
-        })
-
-        if (response.ok) {
-          const result = await response.json()
-
-          // 可以同時儲存更多相關資訊
-          const reservationInfo = {
-            reservationId: result.reservationId,
-            message: result.message,
-            // 可以加入其他需要的資訊
-          }
-          localStorage.setItem('reservationInfo', JSON.stringify(reservationInfo))
-
-          // 導航到指定頁面
-          // this.$router.push('/bookingFinish/:id')
-        } else {
-          throw new Error('預訂失敗')
-        }
-      } catch (error) {
-        console.error('Error submitting booking:', error)
-        // 這裡可以加入錯誤處理，例如顯示錯誤訊息給用戶
-      }
+        
     },
 
     goBack() {
       this.$router.push({
-        name: "BookingFormView",
-        params: { id: this.venueId },
+        name: "BookingDateView",
+        params: { },
         query: this.originalQuery
       })
     },
@@ -193,7 +120,7 @@ export default {
         // 導航到付款頁面
         this.$router.push({
           name: "BookingFinishView",
-          params: { id: this.venueId },
+          params: {  },
           query: this.originalQuery
         })
     },
@@ -212,6 +139,82 @@ export default {
     }
   }
 }
+</script> -->
+<script setup>
+import { ref, computed, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import ProgressSteps from '../components/ProgressSteps_Jo.vue'
+
+const router = useRouter()
+const route = useRoute()
+
+// 從路由獲取資料
+const bookingData = ref({
+  name: '測試用戶',  // 這裡可以從 localStorage 或其他地方獲取用戶資料
+  phone: '0912345678',
+  reservationDate: route.query.date,
+  venueName: route.query.title && route.query.courtId 
+    ? `${route.query.title} ${route.query.courtId}場` 
+    : '未選擇場地',
+  venueType: route.query.title,
+  timeSlots: JSON.parse(route.query.selectedTime || '[]'),
+  totalAmount: Number(route.query.totalHours) * 200  // 假設每小時 200 元
+})
+
+// 檢查收到的資料
+console.log('Route query:', route.query)
+
+const paymentMethod = ref('ONLINE_PAYMENT')
+const originalQuery = ref(route.query)
+
+// 格式化時段顯示
+const formatTimeSlots = computed(() => {
+  return bookingData.value.timeSlots
+    .map(slot => slot.time)
+    .join('、')
+})
+
+// 暫時空的器材列表
+const formatEquipments = computed(() => '無')
+
+const goBack = () => {
+  router.push({
+    name: 'bookingDateView',
+    params: {
+      id: route.params.id
+    },
+    query: originalQuery.value
+  })
+}
+
+const submitBooking = async () => {
+  // 這裡添加提交預約的邏輯
+  console.log('提交預約:', bookingData.value)
+}
+
+const goNext = () => {
+  submitBooking()
+  router.push({
+    name: 'bookingFinishView',
+    params: {
+      id: route.params.id
+    },
+    query: {
+      ...originalQuery.value,
+      paymentMethod: paymentMethod.value
+    }
+  })
+}
+
+// 監聽 paymentMethod 的變化
+watch(paymentMethod, (newValue) => {
+  try {
+    bookingData.value.paymentMethod = newValue
+    localStorage.setItem('bookingData', JSON.stringify(bookingData.value))
+  } catch (error) {
+    console.error('Error saving booking data:', error)
+  }
+})
 </script>
 
 <style scoped>

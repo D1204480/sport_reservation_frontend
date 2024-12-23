@@ -253,6 +253,8 @@ const goNext = () => {
       courtId: route.params.courtId,
     },
     query: {  // 使用 query 來傳遞額外的資料
+      courtId: courtId,
+      title: route.query.title,
       date: formatDateString(selectedDate.value),
       selectedTime: JSON.stringify(selectedSlots),
       totalHours: totalSelectedHours.value
