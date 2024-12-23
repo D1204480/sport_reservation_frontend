@@ -68,6 +68,21 @@ const router = createRouter({
       path: '/bookingFinishView/:id',
       name: 'bookingFinishView',
       component: BookingFinishView
+    },
+    {
+      path: '/userOrder',
+      name: 'userOrderView',
+      component: UserOrderView,
+    },
+    {
+      path: '/userInfo',
+      name: 'userInfoView',
+      component: UserInfoView,
+    },
+    {
+      path: '/userOrderInfo/:id',
+      name: 'userOrderInfoView',
+      component: UserOrderInfoView,
     }
   ]
 })

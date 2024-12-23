@@ -4,6 +4,35 @@
       <div class="brand-title">運動中心</div>
       <div class="brand-subtitle">Sports Center</div>
     </a>
+
+    <!-- 會員登入頭像和下拉選單 -->
+    <div v-if="userStore.isLoggedIn" class="d-flex align-items-center" style="margin-right: 15px;">
+      <div class="dropdown">
+        <a class="d-flex align-items-center text-gray text-decoration-none dropdown-toggle" id="userDropdown"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <img :src="userStore.user?.avatar || 'https://picsum.photos/id/684/600/400'" alt="user-avatar" width="40"
+            height="40" class="rounded-circle border" style="border-width: 8px; ">
+
+          <h5 style="margin-left: 10px; color: #4A4A4A;">{{ userStore.user?.name || userStore.user?.username || "Hi,
+            Welcome"}}</h5>
+        </a>
+
+
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li>
+            <RouterLink to="/userInfo" class="dropdown-item" href="#">會員資訊</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/userOrder" class="dropdown-item" href="#">租借紀錄</RouterLink>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#" @click="handleLogout">登出</a></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="auth-buttons">
       <RouterLink to="/register" href="#" class="register-btn">註冊</RouterLink>
       <!-- <a href="#" class="">登入</a> -->
