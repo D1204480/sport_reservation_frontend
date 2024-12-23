@@ -49,7 +49,9 @@
     return route.path === '/reservation' || 
     route.path.includes('/cardInfoView/') ||
     route.path.includes('/bookingCardView')|| 
-    route.path.includes('/bookingDateView')
+    route.path.includes('/bookingDateView') || 
+    route.path.includes('/bookingPaymentView') || 
+    route.path.includes('/bookingFinishView') 
   })
   </script>
   

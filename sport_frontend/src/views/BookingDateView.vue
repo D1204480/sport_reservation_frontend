@@ -1,4 +1,5 @@
 <template>
+  <progress-steps :current-step="1" />
   <div class="booking-date-view">
     <div class="container">
       <!-- 日曆元件 -->
@@ -65,11 +66,17 @@
         </div>
       </div>
     </div>
+
+    <div class="button-group">
+      <button class="btn btn-back" @click="goBack">上一步</button>
+      <button class="btn btn-book" @click="goNext">下一步</button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
+import ProgressSteps from '../components/ProgressSteps_Jo.vue'
 
 // 基礎資料
 const weekdays = ['日', '一', '二', '三', '四', '五', '六']
@@ -372,6 +379,36 @@ body {
   font-size: 14px;
 }
 
+.button-group {
+  display: flex;
+  gap: 15px;
+  padding: 20px 0;
+  justify-content: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.btn-back {
+  background: white;
+  color: #333;
+}
+
+.btn-book {
+  background: #FF6242;
+  color: white;
+  border: none;
+}
+
+.btn-book:hover {
+  background-color: #ff4f2b;
+}
 
 /* 新增響應式樣式 */
 @media screen and (max-width: 768px) {
