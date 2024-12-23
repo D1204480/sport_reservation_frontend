@@ -383,11 +383,16 @@ const searchOrders = () => {
 }
 
 // 前往訂單詳情
-const goToOrderDetail = (orderId) => {
-  router.push({
-    name: 'userOrderInfo',
-    params: { id: orderId }
-  })
+const goToOrderDetail = async (orderId) => {
+  try {
+    await router.push({
+      path: `/userOrderInfo/${orderId}`  // 使用完整路徑
+    })
+  } catch (error) {
+    console.error('路由跳轉錯誤:', error)
+    // 可以添加錯誤提示
+    alert('頁面跳轉失敗，請稍後再試')
+  }
 }
 
 // 重新載入
