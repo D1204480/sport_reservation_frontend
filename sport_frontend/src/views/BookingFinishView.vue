@@ -1,241 +1,164 @@
-<script setup>
-import ProgressSteps from '../components/ProgressSteps_Jo.vue'
-</script>
-
 <template>
   <progress-steps :current-step="3" />
   <div class="booking-finish-view">
-    <h2>完成預訂</h2>
-    <h4>謝謝惠顧，您的預約已完成，如欲查看更詳細的資訊可至歷史訂單查看</h4>
+    <h2>預約完成</h2>
 
-    <div v-if="qrCodeUrl && latestOrder" class="content-container">
-      <!-- 左側訂單資訊區域 -->
-      <div class="order-info-section">
-        <div class="info-card">
-          <h2>訂單資訊</h2>
-          <div class="info-item">
-            <label>訂單編號：</label>
-            <span>{{ latestOrder.orderId }}</span>
-          </div>
-          <div class="info-item">
-            <label>預約場地：</label>
-            <span>{{ bookingData.venueName }}</span>
-          </div>
-          <div class="info-item">
+    <!-- 左側訂單資訊區域 -->
+    <div class="order-info-section">
+      <div class="info-card">
+        <h4>預約人資料</h4>
+        <div class="info-item">
+          <label>預約人：</label>
+          <span>{{ bookingData.name }}</span>
+        </div>
+        <div class="info-item">
+          <label>聯絡電話：</label>
+          <span>{{ bookingData.phone }}</span>
+        </div>
+        <!-- <div class="info-item">
             <label>預約場地日期：</label>
             <span>{{ bookingData.reservationDate }}</span>
+          </div> -->
+      </div>
+
+      <div class="info-card">
+        <h4 class="section-title">租借資訊</h4>
+        <div class="section-content">
+          <div class="info-item">
+            <span>預約日期：<span class="info-value">{{ bookingData.reservationDate }}</span></span>
+          </div>
+          <div class="info-item">
+            <span>租借場地：<span class="info-value">{{ bookingData.venueName }}</span></span>
+          </div>
+          <div class="info-item">
+            <span>租借類型：<span class="info-value">{{ bookingData.venueType }}</span></span>
+          </div>
+          <div class="info-item">
+            <span>預約時段：<span class="info-value">{{ formatTimeSlots }}</span></span>
+          </div>
+          <div class="info-item">
+            <span>租借器材：<span class="info-value">{{ formatEquipments }}</span></span>
+          </div>
+          <div class="info-item">
+            <span>場地費用總計：<span class="info-value">{{ bookingData.totalAmount }}元</span></span>
           </div>
         </div>
+      </div>
 
-        <div class="info-card">
-          <h2>付款資訊</h2>
-          <div class="info-item">
-            <label>付款方式：</label>
-            <span>{{ bookingData.paymentMethod }}</span>
-          </div>
-          <div class="info-item">
+
+      <div class="info-card">
+        <h4>繳費方式</h4>
+        <div class="info-item">
+          <label>付款方式：</label>
+          <span>{{ bookingData.paymentMethod }}</span>
+        </div>
+        <!-- <div class="info-item">
             <label>匯款帳號：</label>
             <span>{{ latestOrder.accountingNumber || '- -' }}</span>
           </div>
           <div class="info-item">
             <label>繳款期限：</label>
             <span>{{ paymentDueDate }}</span>
-          </div>
-        </div>
+          </div> -->
       </div>
-
-      <!-- 右側 QR Code 區域 -->
-      <div class="qr-code-section">
-        <div class="qr-code-container">
-          <p>建議您可以使用 QR code 進場</p>
-          <img :src="qrCodeUrl" alt="QR Code" />
-          <div class="qr-code-footer">
-            <p>有效期限倒數：<strong>{{ countdown }}</strong> 秒</p>
-            <button @click="manualUpdateQRCode" class="update-button">立即更新 QR Code</button>
-          </div>
-        </div>
-      </div>
-      
     </div>
 
-    <p v-if="qrCodeUrl === null && latestOrder === null" class="error">
-      無法載入最新的 QR Code 或訂單資訊，請稍後再試。
-    </p>
-
-    <div class="button-group">
-      <button class="btn btn-book" @click="goNext">返回首頁</button>
+    <!-- 右側 QR Code 區域 -->
+    <div class="qr-code-section">
+      <div class="qr-code-container">
+        <p>場地保留10分鐘，逾期報到需重新預約。</p>
+        <p>您可以依 QR code 報到進場</p>
+        <img :src="qrCodeUrl" alt="QR Code" />
+        <div class="qr-code-footer">
+          <p>有效期限倒數：<strong>{{ countdown }}</strong> 秒</p>
+          <button @click="manualUpdateQRCode" class="update-button">立即更新 QR Code</button>
+        </div>
+      </div>
     </div>
+
   </div>
+
+
+  <div class="button-group">
+    <button class="btn btn-book" @click="goNext">返回首頁</button>
+  </div>
+
 </template>
 
-<script>
-import axios from "axios";
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import ProgressSteps from '../components/ProgressSteps_Jo.vue'
 
-export default {
-  name: "BookingFinishView",
-  data() {
-    return {
-      qrCodeUrl: null,
-      latestOrder: null,
-      intervalId: null,
-      countdown: 10,
-      refreshInterval: 10000,
-      bookingData: {
-        name: '',
-        phone: '',
-        applyApartment: '',
-        content: '',
-        equipmentIds: [],
-        venueId: '',
-        venueName: '',
-        originalQuery: null,
-        lastUpdated: null,
-      },
-      paymentMethod: '',
-    };
-  },
+const router = useRouter()
+const route = useRoute()
 
-  mounted() {
-    this.startAutoUpdateQRCode();
-  },
-  beforeDestroy() {
-    this.stopAutoUpdateQRCode();
-  },
+// 檢查收到的資料
+console.log('Route query:', route.query)
 
-  created() {
-    // 保存進入頁面時的查詢參數
-    this.originalQuery = { ...this.$route.query }
+// 取得付款方式顯示文字
+const displayPaymentMethod = computed(() => {
+ const paymentMethods = {
+   'ONLINE_PAYMENT': '線上繳費',
+   'BANK_TRANSFER': 'ATM/銀行臨櫃 轉帳繳費'
+ }
+ return paymentMethods[route.query.paymentMethod] || route.query.paymentMethod
+})
 
-    try {
-      // 載入使用者資料
-      const userData = localStorage.getItem('user')
-      if (userData) {
-        this.userId = JSON.parse(userData).userId
-      }
+// 從路由獲取資料
+const bookingData = ref({
+  name: '林林七',  // 這裡可以從 localStorage 或其他地方獲取用戶資料
+  phone: '0912345678',
+  reservationDate: route.query.date,
+  venueName: route.query.venueName || '未選擇場地',
+  venueType: route.query.title || '未選擇類型',
+  timeSlots: JSON.parse(route.query.selectedTime || '[]'),
+  totalAmount: route.query.totalAmount,
+  paymentMethod: displayPaymentMethod.value
+})
 
-      // 載入預約資料
-      const storedData = localStorage.getItem('bookingData')
-      if (storedData) {
-        this.bookingData = JSON.parse(storedData)
-      }
+// 格式化時段顯示
+const formatTimeSlots = computed(() => {
+ return bookingData.value.timeSlots
+   .map(slot => slot.time)
+   .join('、')
+})
 
-      // 載入付款方式
-      const storedPaymentMethod = localStorage.getItem('paymentMethod')
-      if (storedPaymentMethod) {
-        this.paymentMethod = storedPaymentMethod
-      }
-    } catch (error) {
-      console.error('Error loading booking data:', error)
-    }
-  },
+// 暫時空的器材列表
+const formatEquipments = computed(() => '無')
 
-  computed: {
-    displayPaymentMethod() {
-      const paymentMethods = {
-        'ONLINE_PAYMENT': '線上繳費',
-        'BANK_TRANSFER': 'ATM/銀行臨櫃 轉帳繳費'
-      };
-      return paymentMethods[this.paymentMethod] || this.paymentMethod;
-    },
+// QR Code 相關
+const countdown = ref(600) // 10分鐘倒數
+const qrCodeUrl = ref('https://via.placeholder.com/200x200?text=QR+Code') // 假QR碼圖片
 
-    paymentDueDate() {
-      try {
-        if (!this.bookingData?.lastUpdated) {
-          return '- -';
-        }
-        
-        // 將 lastUpdated 轉換為 Date 對象
-        const lastUpdatedDate = new Date(this.bookingData.lastUpdated);
-        
-        // 加上 24 小時
-        const dueDate = new Date(lastUpdatedDate.getTime() + 24 * 60 * 60 * 1000);
-        
-        // 格式化日期為 YYYY-MM-DD HH:mm
-        const year = dueDate.getFullYear();
-        const month = String(dueDate.getMonth() + 1).padStart(2, '0');
-        const day = String(dueDate.getDate()).padStart(2, '0');
-        const hours = String(dueDate.getHours()).padStart(2, '0');
-        const minutes = String(dueDate.getMinutes()).padStart(2, '0');
-        
-        return `${year}-${month}-${day} ${hours}:${minutes}`;
-      } catch (error) {
-        console.error('Error calculating payment due date:', error);
-        return '- -';
-      }
-    }
-  },
+// 更新QR Code
+const manualUpdateQRCode = () => {
+ // 這裡可以添加更新QR Code的邏輯
+ countdown.value = 600 // 重置倒數計時
+}
 
-  methods: {
-    async loadLatestQRCode() {
-      try {
-        const qrCodeResponse = await axios.get(
-          `http://localhost:8080/api/orders/latest-qrcode?t=${new Date().getTime()}`,
-          { responseType: "arraybuffer" }
-        );
+// 設定倒數計時
+onMounted(() => {
+ const timer = setInterval(() => {
+   if (countdown.value > 0) {
+     countdown.value--
+   } else {
+     clearInterval(timer)
+   }
+ }, 1000)
+})
 
-        const blob = new Blob([qrCodeResponse.data], { type: "image/png" });
-        const blobUrl = URL.createObjectURL(blob);
-
-        if (this.qrCodeUrl) {
-          URL.revokeObjectURL(this.qrCodeUrl);
-        }
-
-        this.qrCodeUrl = blobUrl;
-
-        const orderResponse = await axios.get("http://localhost:8080/api/orders/latest");
-        this.latestOrder = orderResponse.data;
-
-        // console.log("QR Code and Order updated:", this.latestOrder);
-      } catch (error) {
-        console.error("無法載入 QR Code 或訂單消息", error);
-        this.qrCodeUrl = null;
-        this.latestOrder = null;
-      }
-    },
-    startAutoUpdateQRCode() {
-      this.loadLatestQRCode();
-      this.startCountdown();
-
-      this.intervalId = setInterval(() => {
-        this.loadLatestQRCode();
-        this.startCountdown();
-      }, this.refreshInterval);
-    },
-    stopAutoUpdateQRCode() {
-      if (this.intervalId) {
-        clearInterval(this.intervalId);
-        this.intervalId = null;
-      }
-    },
-    manualUpdateQRCode() {
-      this.stopAutoUpdateQRCode();
-      this.loadLatestQRCode();
-      this.startAutoUpdateQRCode();
-    },
-    startCountdown() {
-      this.countdown = this.refreshInterval / 1000;
-      const countdownInterval = setInterval(() => {
-        if (this.countdown > 0) {
-          this.countdown--;
-        } else {
-          clearInterval(countdownInterval);
-        }
-      }, 1000);
-    },
-
-    goNext() {
-      // 導航到場地租借頁面
-      this.$router.push({
-        name: "home",
-      })
-
-      // 清除之前的暫存資料
-      localStorage.removeItem('bookingData')
-      localStorage.removeItem('paymentMethod')
-      localStorage.removeItem('reservationInfo')
-    },
-  },
-};
+const goNext = () => {
+ // 清除暫存資料
+ localStorage.removeItem('bookingData')
+ localStorage.removeItem('paymentMethod')
+ localStorage.removeItem('reservationInfo')
+ 
+ // 導航到首頁
+ router.push({
+   name: 'home'
+ })
+}
 </script>
 
 <style scoped>
@@ -245,13 +168,16 @@ export default {
   padding: 20px;
 }
 
-h2,
-h4 {
+h2 {
   text-align: center;
+}
+
+h4 {
+  text-align: left;
   margin-bottom: 30px;
 }
 
-h4{
+h4 {
   font-weight: normal;
 }
 
@@ -264,7 +190,9 @@ h4{
 /* 左側 QR Code 區域 */
 .qr-code-section {
   flex: 1;
-  padding: 20px /*100px 20px 20px*/;
+  padding: 20px
+    /*100px 20px 20px*/
+  ;
   background-color: #f8f9fa;
   border-radius: 10px;
   display: flex;
@@ -320,7 +248,9 @@ h4{
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px /*20px 20px 140px*/;
+  padding: 20px
+    /*20px 20px 140px*/
+  ;
 }
 
 .info-card {

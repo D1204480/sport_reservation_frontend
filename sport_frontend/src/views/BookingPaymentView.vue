@@ -148,72 +148,85 @@ import ProgressSteps from '../components/ProgressSteps_Jo.vue'
 const router = useRouter()
 const route = useRoute()
 
-// 從路由獲取資料
-const bookingData = ref({
-  name: '測試用戶',  // 這裡可以從 localStorage 或其他地方獲取用戶資料
-  phone: '0912345678',
-  reservationDate: route.query.date,
-  venueName: route.query.title && route.query.courtId 
-    ? `${route.query.title} ${route.query.courtId}場` 
-    : '未選擇場地',
-  venueType: route.query.title,
-  timeSlots: JSON.parse(route.query.selectedTime || '[]'),
-  totalAmount: Number(route.query.totalHours) * 200  // 假設每小時 200 元
-})
-
 // 檢查收到的資料
 console.log('Route query:', route.query)
+
+// 從路由獲取資料
+const bookingData = ref({
+ name: '林林七',  // 這裡可以從 localStorage 或其他地方獲取用戶資料
+ phone: '0912345678',
+ reservationDate: route.query.date,
+ venueName: route.query.title && route.query.courtId 
+   ? `${route.query.title} ${route.query.courtId}場` 
+   : '未選擇場地',
+ venueType: route.query.title || '未選擇類型',
+ timeSlots: JSON.parse(route.query.selectedTime || '[]'),
+ totalAmount: Number(route.query.totalHours) * 200  // 假設每小時 200 元
+})
 
 const paymentMethod = ref('ONLINE_PAYMENT')
 const originalQuery = ref(route.query)
 
 // 格式化時段顯示
 const formatTimeSlots = computed(() => {
-  return bookingData.value.timeSlots
-    .map(slot => slot.time)
-    .join('、')
+ return bookingData.value.timeSlots
+   .map(slot => slot.time)
+   .join('、')
 })
 
 // 暫時空的器材列表
 const formatEquipments = computed(() => '無')
 
 const goBack = () => {
-  router.push({
-    name: 'bookingDateView',
-    params: {
-      id: route.params.id
-    },
-    query: originalQuery.value
-  })
+ router.push({
+   name: 'bookingDateView',
+   params: {
+     id: route.params.id,
+   },
+   query: originalQuery.value
+ })
 }
 
 const submitBooking = async () => {
-  // 這裡添加提交預約的邏輯
-  console.log('提交預約:', bookingData.value)
+ // 這裡添加提交預約的邏輯
+ console.log('提交預約:', bookingData.value)
 }
 
 const goNext = () => {
-  submitBooking()
-  router.push({
-    name: 'bookingFinishView',
-    params: {
-      id: route.params.id
-    },
-    query: {
-      ...originalQuery.value,
-      paymentMethod: paymentMethod.value
-    }
-  })
+  // 先檢查是否選擇付款方式
+  if (!paymentMethod.value) {
+    alert('請選擇繳費方式');
+    return;
+  }
+
+ submitBooking();
+
+ router.push({
+   name: 'bookingFinishView',
+   params: {
+     id: route.params.id
+   },
+   query: {
+     ...originalQuery.value,   // 保留原有資料
+     courtId: route.query.courtId,  // 運動種類id
+     title: route.query.title,  // 場地名稱
+     date: route.query.date,  // 預約日期
+     selectedTime: route.query.selectedTime,  // 預約時段
+     totalHours: route.query.totalHours,  // 總時數
+     paymentMethod: paymentMethod.value,   // 付款方式
+     totalAmount: bookingData.value.totalAmount,  // 總金額
+   }
+ })
 }
 
 // 監聽 paymentMethod 的變化
 watch(paymentMethod, (newValue) => {
-  try {
-    bookingData.value.paymentMethod = newValue
-    localStorage.setItem('bookingData', JSON.stringify(bookingData.value))
-  } catch (error) {
-    console.error('Error saving booking data:', error)
-  }
+ try {
+   bookingData.value.paymentMethod = newValue
+   localStorage.setItem('bookingData', JSON.stringify(bookingData.value))
+ } catch (error) {
+   console.error('Error saving booking data:', error)
+ }
 })
 </script>
 
