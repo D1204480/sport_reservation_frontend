@@ -9,7 +9,7 @@
           <h2>訂單資訊</h2>
           <div class="info-item">
             <label>訂單編號：</label>
-            <span>{{ latestOrder.orderId }}</span>
+            <span>{{ orderId }}</span>
           </div>
           <div class="info-item">
             <label>預約場地：</label>
@@ -47,184 +47,28 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "UserOrderInfoView",
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
-
   data() {
     return {
-      qrCodeUrl: null,
-      latestOrder: null,
-      intervalId: null,
-      countdown: 10,
-      refreshInterval: 10000,
-      bookingData: {
-        name: '',
-        phone: '',
-        applyApartment: '',
-        content: '',
-        equipmentIds: [],
-        venueId: '',
-        venueName: '',
-        originalQuery: null,
-        lastUpdated: null,
-      },
-      paymentMethod: '',
+   
     };
   },
 
-  mounted() {
-    this.startAutoUpdateQRCode();
-  },
-  beforeDestroy() {
-    this.stopAutoUpdateQRCode();
-  },
+ 
 
   async created() {
     // 保存進入頁面時的查詢參數
     this.originalQuery = { ...this.$route.query }
 
-    // Modify your created hook to get the route param
-    const orderId = this.$route.params.id;
-    await this.loadOrderDetails(orderId);
 
-    try {
-      // 載入使用者資料
-      const userData = localStorage.getItem('user')
-      if (userData) {
-        this.userId = JSON.parse(userData).userId
-      }
-
-      // // 載入預約資料
-      // const storedData = localStorage.getItem('bookingData')
-      // if (storedData) {
-      //   this.bookingData = JSON.parse(storedData)
-      // }
-
-      // // 載入付款方式
-      // const storedPaymentMethod = localStorage.getItem('paymentMethod')
-      // if (storedPaymentMethod) {
-      //   this.paymentMethod = storedPaymentMethod
-      // }
-    } catch (error) {
-      console.error('Error loading booking data:', error)
-    }
+    
   },
 
-  // computed: {
-  //   displayPaymentMethod() {
-  //     const paymentMethods = {
-  //       'ONLINE_PAYMENT': '線上繳費',
-  //       'BANK_TRANSFER': 'ATM/銀行臨櫃 轉帳繳費'
-  //     };
-  //     return paymentMethods[this.paymentMethod] || this.paymentMethod;
-  //   },
-
-  //   paymentDueDate() {
-  //     try {
-  //       if (!this.bookingData?.lastUpdated) {
-  //         return '- -';
-  //       }
-        
-  //       // 將 lastUpdated 轉換為 Date 對象
-  //       const lastUpdatedDate = new Date(this.bookingData.lastUpdated);
-        
-  //       // 加上 24 小時
-  //       const dueDate = new Date(lastUpdatedDate.getTime() + 24 * 60 * 60 * 1000);
-        
-  //       // 格式化日期為 YYYY-MM-DD HH:mm
-  //       const year = dueDate.getFullYear();
-  //       const month = String(dueDate.getMonth() + 1).padStart(2, '0');
-  //       const day = String(dueDate.getDate()).padStart(2, '0');
-  //       const hours = String(dueDate.getHours()).padStart(2, '0');
-  //       const minutes = String(dueDate.getMinutes()).padStart(2, '0');
-        
-  //       return `${year}-${month}-${day} ${hours}:${minutes}`;
-  //     } catch (error) {
-  //       console.error('Error calculating payment due date:', error);
-  //       return '- -';
-  //     }
-  //   }
-  // },
+  
 
   methods: {
-    async loadOrderDetails(orderId) {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/orders/${orderId}`);
-        this.latestOrder = response.data;
-        // Update bookingData based on the order details
-        this.bookingData = {
-          venueName: this.latestOrder.reservation?.venue?.venueName,
-          reservationDate: this.latestOrder.reservation?.reservationDate,
-          // ... other fields as needed
-        };
-      } catch (error) {
-        console.error("Error loading order details:", error);
-      }
-    },
-
-    async loadLatestQRCode() {
-      try {
-        const qrCodeResponse = await axios.get(
-          `http://localhost:8080/api/orders/latest-qrcode?t=${new Date().getTime()}`,
-          { responseType: "arraybuffer" }
-        );
-
-        const blob = new Blob([qrCodeResponse.data], { type: "image/png" });
-        const blobUrl = URL.createObjectURL(blob);
-
-        if (this.qrCodeUrl) {
-          URL.revokeObjectURL(this.qrCodeUrl);
-        }
-
-        this.qrCodeUrl = blobUrl;
-
-        // const orderResponse = await axios.get("http://localhost:8080/api/orders/latest");
-        // this.latestOrder = orderResponse.data;
-
-        // console.log("QR Code and Order updated:", this.latestOrder);
-      } catch (error) {
-        console.error("無法載入 QR Code 或訂單消息", error);
-        this.qrCodeUrl = null;
-        this.latestOrder = null;
-      }
-    },
-    startAutoUpdateQRCode() {
-      this.loadLatestQRCode();
-      this.startCountdown();
-
-      this.intervalId = setInterval(() => {
-        this.loadLatestQRCode();
-        this.startCountdown();
-      }, this.refreshInterval);
-    },
-    stopAutoUpdateQRCode() {
-      if (this.intervalId) {
-        clearInterval(this.intervalId);
-        this.intervalId = null;
-      }
-    },
-    manualUpdateQRCode() {
-      this.stopAutoUpdateQRCode();
-      this.loadLatestQRCode();
-      this.startAutoUpdateQRCode();
-    },
-    startCountdown() {
-      this.countdown = this.refreshInterval / 1000;
-      const countdownInterval = setInterval(() => {
-        if (this.countdown > 0) {
-          this.countdown--;
-        } else {
-          clearInterval(countdownInterval);
-        }
-      }, 1000);
+   
     },
 
     goNext() {

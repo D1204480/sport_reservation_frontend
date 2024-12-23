@@ -1,6 +1,6 @@
 <template>
   <div class="order-history">
-    <h2 class="title">歷史訂單紀錄</h2>
+    <h2 class="title">預約紀錄</h2>
 
     <!-- 篩選區域 -->
     <div class="filters">
@@ -45,14 +45,13 @@
     </div>
 
     <!-- 訂單表格 -->
-    <div v-if="!isLoading && !error" class="table-container">
-      <table>
+    <div v-else-if="!isLoading" class="table-container">
+      <table v-if="filteredOrders.length > 0">
         <thead>
           <tr>
             <th>訂單號碼</th>
             <th>場地名稱</th>
             <th>預約日期</th>
-            <!-- <th>預約時段</th> -->
             <th>訂單詳情</th>
             <th>訂單狀態</th>
             <th class="amount">金額</th>
@@ -61,10 +60,9 @@
         <tbody>
           <tr v-for="order in filteredOrders" :key="order.orderId">
             <td>{{ order.orderId }}</td>
-            <td>{{ order.reservation?.venue?.venueName || '無資料' }}</td>
-            <td>{{ formatDate(order.reservation?.reservationDate) || '無資料' }}</td>
-            <!-- <td>{{ order.reservation?.timePeriodText || '無資料' }}</td> -->
-            <td>{{ order.payment?.paymentMethodDisplay || '無資料' }}</td>
+            <td>{{ order.venueName || '無資料' }}</td>
+            <td>{{ formatDate(order.reservationDate) || '無資料' }}</td>
+            <td>{{ order.paymentMethod || '無資料' }}</td>
             <td style="white-space: nowrap;">
               <button class="btn btn-warning btn-sm btn-xs btn-block" @click="goToOrderDetail(order.orderId)">
                 訂單詳情
@@ -74,14 +72,18 @@
               {{ order.totalAmount ? `NT$ ${formatPrice(order.totalAmount)}` : '無資料' }}
             </td>
           </tr>
-          <tr v-if="filteredOrders.length === 0">
-            <td colspan="7" class="empty-message">
-              無訂單紀錄
-            </td>
-          </tr>
         </tbody>
       </table>
+
+      <!-- 無資料顯示 -->
+      <div v-else class="no-data">
+        <div class="no-data-content">
+          <i class="fas fa-inbox"></i>
+          <p>目前沒有訂單記錄</p>
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -352,7 +354,7 @@ const filteredOrders = computed(() => {
       const orderDate = new Date(order.reservationDate)
       const startDate = new Date(filters.value.startDate)
       const endDate = new Date(filters.value.endDate)
-      
+
       if (orderDate < startDate || orderDate > endDate) {
         return false
       }
@@ -400,6 +402,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+h2 {
+  text-align: center;
+}
+
 .loading-message {
   text-align: center;
   padding: 20px;
@@ -543,13 +549,13 @@ tr:hover td {
 
 .btn-warning {
   color: white;
-  background-color: #3498db;
-  border-color: #3498db;
+  background-color: #FF6242;
+  border-color: #FF6242;
 }
 
 .btn-warning:hover {
-  background-color: #2687c8;
-  border-color: #2687c8;
+  background-color: #ff4f2b;
+  border-color: #ff4f2b;
 }
 
 
