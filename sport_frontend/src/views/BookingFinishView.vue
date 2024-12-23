@@ -75,9 +75,7 @@
         </div>
       </div>
     </div>
-
   </div>
-
 
   <div class="button-group">
     <button class="btn btn-book" @click="goNext">返回首頁</button>
@@ -110,7 +108,9 @@ const bookingData = ref({
   name: '林林七',  // 這裡可以從 localStorage 或其他地方獲取用戶資料
   phone: '0912345678',
   reservationDate: route.query.date,
-  venueName: route.query.venueName || '未選擇場地',
+  venueName: route.query.title && route.query.courtId 
+   ? `${route.query.title} ${route.query.courtId}場` 
+   : '未選擇場地',
   venueType: route.query.title || '未選擇類型',
   timeSlots: JSON.parse(route.query.selectedTime || '[]'),
   totalAmount: route.query.totalAmount,
@@ -163,9 +163,20 @@ const goNext = () => {
 
 <style scoped>
 .booking-finish-view {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
+
+  display: flex; /* 使用 flex 布局 */
+  flex-wrap: wrap; /* 在小屏幕時允許換行 */
+  gap: 30px; /* 區塊間距 */
+}
+
+/* 主標題獨占一行 */
+.booking-finish-view > h2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 h2 {
@@ -188,16 +199,25 @@ h4 {
 }
 
 /* 左側 QR Code 區域 */
-.qr-code-section {
+/* .qr-code-section {
   flex: 1;
-  padding: 20px
+  padding: 20px */
     /*100px 20px 20px*/
-  ;
+  /* ;
   background-color: #f8f9fa;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+} */
+.qr-code-section {
+  flex: 2; /* 佔據空間 */
+  align-self: flex-start; /* 靠上對齊 */
+  position: sticky; /* 固定位置 */
+  top: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .qr-code-container {
@@ -205,6 +225,8 @@ h4 {
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+
+  text-align: center;
 }
 
 .qr-code-container img {
@@ -243,14 +265,20 @@ h4 {
 }
 
 /* 左側訂單資訊區域 */
-.order-info-section {
+/* .order-info-section {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px
+  padding: 20px */
     /*20px 20px 140px*/
-  ;
+  /* ;
+} */
+.order-info-section {
+  flex: 2; /* 佔據空間 */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .info-card {
@@ -265,8 +293,15 @@ h4 {
   font-size: 1.2em;
 }
 
+.info-card h4 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
 .info-item {
-  display: flex;
+  /* display: flex; */
   margin-bottom: 15px;
   font-size: 16px;
 }
@@ -274,11 +309,18 @@ h4 {
 .info-item label {
   min-width: 100px;
   color: #666;
+
+  display: inline-block;
 }
 
 .info-item span {
   color: #2c3e50;
   font-weight: 500;
+}
+
+.info-value {
+  font-weight: 500;
+  color: #2c3e50;
 }
 
 /* .update-button {
