@@ -63,7 +63,7 @@ import ProgressSteps from '../components/ProgressSteps_Jo.vue'
     </p>
 
     <div class="button-group">
-      <button class="btn btn-book" @click="goNext">返回場地租借</button>
+      <button class="btn btn-book" @click="goNext">返回首頁</button>
     </div>
   </div>
 </template>
