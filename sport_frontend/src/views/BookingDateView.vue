@@ -78,6 +78,10 @@ const selectedDate = ref(new Date(2024, 10, 26)) // 預設選擇 11/26
 const holidays = ref(['2024-11-11', '2024-11-25'])
 const fullyBookedDates = ref(['2024-11-16', '2024-11-17'])
 
+const sportId = route.params.id
+const sportTitle = route.params.title
+const courtId = route.query.courtId
+
 // 時段資料
 const timeSlots = ref([
   {
@@ -214,24 +218,44 @@ const updateTotalTime = () => {
 
 const goBack = () => {
   router.push({
-    path: '/bookingCardView',
-    query: {
-      id: route.query.id,
-      title: route.query.title
+    name: 'bookingCardView',
+    params: {
+      id: route.params.id,
+      title: route.params.title
     }
   })
 }
 
 
 const goNext = () => {
+  // 找出所有被選中的時段
+  const selectedSlots = timeSlots.value.reduce((acc, section) => {
+    const sectionSlots = section.slots
+      .filter(slot => slot.selected)
+      .map(slot => ({
+        time: slot.time,
+        id: slot.id
+      }));
+    return [...acc, ...sectionSlots];
+  }, []);
+
+  // 確保有選擇時段
+  if (selectedSlots.length === 0) {
+    alert('請選擇至少一個時段');
+    return;
+  }
+
   router.push({
-    path: '/bookingPaymentView',
-    query: {
-      id: route.query.id,
-      title: route.query.title,
-      courtId: route.query.courtId,
-      date: formatDateString(selectedDate.value)
-      // 你可能還需要添加選擇的時段信息
+    name: 'bookingPaymentView',
+    params: {
+      id: route.params.id,
+      title: route.params.title,
+      courtId: route.params.courtId,
+    },
+    query: {  // 使用 query 來傳遞額外的資料
+      date: formatDateString(selectedDate.value),
+      selectedTime: JSON.stringify(selectedSlots),
+      totalHours: totalSelectedHours.value
     }
   })
 }

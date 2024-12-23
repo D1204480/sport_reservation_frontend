@@ -46,9 +46,11 @@
       回上一頁
     </button>
     <button class="book-button" @click="router.push({
-      path: '/bookingCardView/:id',
-      query: {
-        id: sportId,
+      name: 'bookingCardView',
+      params: {
+        id: sportId
+      },
+      query: {  // 把 title 移到 query
         title: title
       }
     })">

@@ -37,10 +37,10 @@
       </div>
 
       <div class="button-group">
-    <button class="back-button" @click="router.back()">
-      回上一頁
-    </button>
-  </div>
+        <button class="back-button" @click="router.back()">
+          回上一頁
+        </button>
+      </div>
     </div>
   </div>
 
@@ -96,8 +96,8 @@ import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 
-// 使用 query 獲取參數
-const sportId = Number(route.query.id)
+// 使用 params 獲取參數
+const sportId = Number(route.params.id)
 const sportTitle = ref(route.query.title || '運動')
 
 // 所有場地資料
@@ -151,11 +151,13 @@ const filteredCourts = computed(() => {
 
 const goToCourtDetail = (courtId) => {
   router.push({
-    path: '/bookingDateView/:id',
-    query: {
-      id: route.query.id,  // sport id
-      title: route.query.title,  // sport title
-      courtId: courtId  // add court id
+    name: 'bookingDateView',
+    params: {
+      id: sportId
+    },
+    query: {  
+      courtId: courtId,
+      title: route.query.title  // 傳遞 title 到下一頁
     }
   })
 }
