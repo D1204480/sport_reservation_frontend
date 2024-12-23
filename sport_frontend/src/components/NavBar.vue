@@ -297,7 +297,6 @@ onMounted(() => {
 
 .dropdown-item {
   display: block;
-  margin-top: 5px;
   padding: 8px 16px;
   color: #333;
   text-decoration: none;
