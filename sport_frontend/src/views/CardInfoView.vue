@@ -45,7 +45,13 @@
     <button class="back-button" @click="router.back()">
       回上一頁
     </button>
-    <button class="book-button" @click="router.push('/bookingCardView')">
+    <button class="book-button" @click="router.push({
+      path: '/bookingCardView/:id',
+      query: {
+        id: sportId,
+        title: title
+      }
+    })">
       前往預約
     </button>
   </div>

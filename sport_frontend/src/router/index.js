@@ -50,22 +50,22 @@ const router = createRouter({
       component: CardInfoView
     },
     {
-      path: '/bookingCardView',
+      path: '/bookingCardView/:id',
       name: 'bookingCardView',
       component: BookingCardView
     },
     {
-      path: '/bookingDateView',
+      path: '/bookingDateView/:id',
       name: 'bookingDateView',
       component: BookingDateView
     },
     {
-      path: '/bookingPaymentView',
+      path: '/bookingPaymentView/:id',
       name: 'bookingPaymentView',
       component: BookingPaymentView
     },
     {
-      path: '/bookingFinishView',
+      path: '/bookingFinishView/:id',
       name: 'bookingFinishView',
       component: BookingFinishView
     }
