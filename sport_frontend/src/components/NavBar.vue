@@ -1,41 +1,13 @@
-<template>
+<!-- <template>
   <nav class="navbar">
     <a href="#" class="brand">
       <div class="brand-title">運動中心</div>
       <div class="brand-subtitle">Sports Center</div>
     </a>
 
-    <!-- 會員登入頭像和下拉選單 -->
-    <div v-if="userStore.isLoggedIn" class="d-flex align-items-center" style="margin-right: 15px;">
-      <div class="dropdown">
-        <a class="d-flex align-items-center text-gray text-decoration-none dropdown-toggle" id="userDropdown"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          <img :src="userStore.user?.avatar || 'https://picsum.photos/id/684/600/400'" alt="user-avatar" width="40"
-            height="40" class="rounded-circle border" style="border-width: 8px; ">
-
-          <h5 style="margin-left: 10px; color: #4A4A4A;">{{ userStore.user?.name || userStore.user?.username || "Hi,
-            Welcome"}}</h5>
-        </a>
-
-
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li>
-            <RouterLink to="/userInfo" class="dropdown-item" href="#">會員資訊</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/userOrder" class="dropdown-item" href="#">租借紀錄</RouterLink>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="#" @click="handleLogout">登出</a></li>
-        </ul>
-      </div>
-    </div>
-
+    
     <div class="auth-buttons">
       <RouterLink to="/register" href="#" class="register-btn">註冊</RouterLink>
-      <!-- <a href="#" class="">登入</a> -->
       <button type="button" class="btn login-btn me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
         登入
       </button>
@@ -49,10 +21,64 @@
       <RouterLink to="/register" class="register-btn">註冊</RouterLink>
       <a href="#" class="login-btn">登入</a>
     </div>
+
+    
+  </nav>
+</template> -->
+<template>
+  <nav class="navbar">
+    <a href="#" class="brand">
+      <div class="brand-title">運動中心</div>
+      <div class="brand-subtitle">Sports Center</div>
+    </a>
+
+    <div class="auth-buttons">
+      <!-- 未登入時顯示 -->
+      <template v-if="!isLoggedIn">
+        <RouterLink to="/register" class="register-btn">註冊</RouterLink>
+        <button type="button" class="btn login-btn me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+          登入
+        </button>
+      </template>
+
+      <!-- 登入後顯示會員資訊和下拉選單 -->
+      <div v-else class="user-profile" @click="toggleDropdown">
+        <div class="user-info">
+          <img :src="userAvatar" alt="user avatar" width="40" height="40" class="avatar rounded-circle border"
+            style="border-width: 8px; ">
+          <span class="user-name">{{ userName }}</span>
+        </div>
+        <div class="dropdown-menu" :class="{ show: isDropdownOpen }">
+          <RouterLink to="/userInfo" class="dropdown-item">會員資訊</RouterLink>
+          <RouterLink to="/userOrder" class="dropdown-item">租借紀錄</RouterLink>
+          <hr class="dropdown-divider">
+          <a class="dropdown-item" href="#" @click="handleLogout">登出</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 漢堡選單 -->
+    <button class="hamburger" :class="{ active: isMenuOpen }" @click="toggleMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="mobile-menu" :class="{ active: isMenuOpen }">
+      <template v-if="!isLoggedIn">
+        <RouterLink to="/register" class="register-btn">註冊</RouterLink>
+        <a href="#" class="login-btn">登入</a>
+      </template>
+      <template v-else>
+        <div class="mobile-user-info">{{ userName }}</div>
+        <RouterLink to="/userInfo" class="menu-item">會員資訊</RouterLink>
+        <RouterLink to="/userOrder" class="menu-item">租借紀錄</RouterLink>
+        <a href="#" class="menu-item" @click="handleLogout">登出</a>
+      </template>
+    </div>
   </nav>
 </template>
 
-<script setup>
+<!-- <script setup>
 import { ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router'
 
@@ -62,6 +88,59 @@ const router = useRouter()
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
+</script> -->
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import { RouterLink, useRouter } from 'vue-router'
+
+const router = useRouter()
+const isMenuOpen = ref(false)
+const isDropdownOpen = ref(false)
+const isLoggedIn = ref(false)
+const userAvatar = ref('https://picsum.photos/id/684/600/400')
+const userName = ref('')
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+
+const handleLogout = () => {
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
+  isLoggedIn.value = false;
+  userName.value = '';
+  isDropdownOpen.value = false;
+  router.push('/');
+};
+
+const checkLoginStatus = () => {
+  const userStr = localStorage.getItem('user');
+  if (userStr) {
+    try {
+      const userData = JSON.parse(userStr);
+      isLoggedIn.value = true;
+      userName.value = userData.name || '使用者';
+    } catch (error) {
+      console.error('解析使用者資料失敗:', error);
+    }
+  }
+};
+
+const closeDropdownOnClickOutside = (event) => {
+  if (isDropdownOpen.value && !event.target.closest('.user-profile')) {
+    isDropdownOpen.value = false;
+  }
+};
+
+onMounted(() => {
+  checkLoginStatus();
+  document.addEventListener('click', closeDropdownOnClickOutside);
+});
 </script>
 
 <style scoped>
@@ -185,5 +264,141 @@ const toggleMenu = () => {
   .mobile-menu .login-btn {
     margin-top: 0.5rem;
   }
+}
+
+/* 會員頭像相關樣式 */
+.user-profile {
+  position: relative;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  min-width: 150px;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  margin-top: 5px;
+  padding: 8px 16px;
+  color: #333;
+  text-decoration: none;
+  text-align: center;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-divider {
+  margin: 4px 0;
+  border-top: 1px solid #ddd;
+}
+
+/* 手機版選單項目樣式 */
+.mobile-menu .menu-item {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-menu .menu-item:last-child {
+  border-bottom: none;
+}
+
+/* 新增的使用者資訊樣式 */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-name {
+  font-size: 18px;
+  color: #333;
+}
+
+.mobile-user-info {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+}
+
+/* 其他原有的樣式保持不變 */
+.user-profile {
+  position: relative;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: FFEFE9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  min-width: 150px;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 16px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: #ffc9b5;
+}
+
+.dropdown-divider {
+  margin: 4px;
+  border-top: 2px solid #666666;
+}
+
+.mobile-menu .menu-item {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-menu .menu-item:last-child {
+  border-bottom: none;
 }
 </style>

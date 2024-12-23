@@ -11,6 +11,11 @@ import BookingDateView from '../views/BookingDateView.vue'
 import BookingPaymentView from '../views/BookingPaymentView.vue'
 import BookingFinishView from '../views/BookingFinishView.vue'
 
+import UserOrderView from '../views/UserOrderView.vue'
+import UserInfoView from '../views/UserInfoView.vue'
+import UserOrderInfoView from '../views/UserOrderInfoView.vue'
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
