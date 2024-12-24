@@ -93,15 +93,15 @@ export default {
           alt: '攀岩'
         },
         {
-          image: '/carousel/s04.png',
+          image: '/carousel/s01.png',
           alt: 'whiteDog'
         },
         {
-          image: '/carousel/s05.png',
+          image: '/carousel/s02.png',
           alt: 'YellowDog'
         },
         {
-          image: '/carousel/s06.png',
+          image: '/carousel/s03.png',
           alt: 'cat'
         }
       ]
