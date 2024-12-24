@@ -413,6 +413,7 @@ body {
   gap: 20px;
   margin-top: 20px;
   font-size: 14px;
+  justify-content: center;
 }
 
 .legend-item {
