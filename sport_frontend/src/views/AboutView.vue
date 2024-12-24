@@ -192,6 +192,7 @@ export default {
   border-radius: 10px;
   margin: 30px 0 30px 15px;
   font-size: large;
+  max-height: 600px;
 }
 
 .sidebar-title {
