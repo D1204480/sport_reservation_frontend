@@ -129,7 +129,7 @@ const formatEquipments = computed(() => '無')
 
 // QR Code 相關
 const countdown = ref(600) // 10分鐘倒數
-const qrCodeUrl = ref('https://via.placeholder.com/200x200?text=QR+Code') // 假QR碼圖片
+const qrCodeUrl = ref('https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEMO123456') // 假QR碼圖片
 
 // 更新QR Code
 const manualUpdateQRCode = () => {
