@@ -91,8 +91,9 @@ const toggleMenu = () => {
 </script> -->
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { RouterLink, useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user';
 
 const router = useRouter()
 const isMenuOpen = ref(false)
@@ -100,6 +101,20 @@ const isDropdownOpen = ref(false)
 const isLoggedIn = ref(false)
 const userAvatar = ref('https://picsum.photos/id/684/600/400')
 const userName = ref('')
+const userStore = useUserStore();
+
+// 監聽 userStore 的變化
+watch(() => userStore.user, (newUser) => {
+  if (newUser) {
+    isLoggedIn.value = true;
+    userName.value = newUser.name;
+    userAvatar.value = newUser.avatar || 'https://picsum.photos/id/684/600/400';
+  } else {
+    isLoggedIn.value = false;
+    userName.value = '';
+    userAvatar.value = 'https://picsum.photos/id/684/600/400';
+  }
+}, { immediate: true });
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
@@ -118,6 +133,7 @@ const handleLogout = () => {
   router.push('/');
 };
 
+// 檢查登入狀態的函數
 const checkLoginStatus = () => {
   const userStr = localStorage.getItem('user');
   if (userStr) {
@@ -125,6 +141,9 @@ const checkLoginStatus = () => {
       const userData = JSON.parse(userStr);
       isLoggedIn.value = true;
       userName.value = userData.name || '使用者';
+      userAvatar.value = userData.avatar || 'https://picsum.photos/id/684/600/400';
+      // 同步更新 store
+      userStore.setUser(userData);
     } catch (error) {
       console.error('解析使用者資料失敗:', error);
     }
@@ -140,6 +159,8 @@ const closeDropdownOnClickOutside = (event) => {
 onMounted(() => {
   checkLoginStatus();
   document.addEventListener('click', closeDropdownOnClickOutside);
+  // 監聽 storage 變化
+  window.addEventListener('storage', checkLoginStatus);
 });
 </script>
 
@@ -287,7 +308,7 @@ onMounted(() => {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   min-width: 150px;
 }
 
@@ -365,7 +386,7 @@ onMounted(() => {
   background-color: FFEFE9;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   min-width: 150px;
 }
 

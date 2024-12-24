@@ -17,11 +17,16 @@ export const useUserStore = defineStore('user', {
     setUser(user) {
       this.user = user
       this.isAuthenticated = true
+      // 確保狀態更新後觸發事件
+      window.dispatchEvent(new Event('user-login-state-changed'));
     },
     
     resetUser() {
       this.user = null
       this.isAuthenticated = false
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      window.dispatchEvent(new Event('user-login-state-changed'));
     }
   }
 })
