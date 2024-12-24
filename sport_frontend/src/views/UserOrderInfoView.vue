@@ -1,37 +1,37 @@
 <template>
-  <progress-steps :current-step="3" />
   <div class="booking-finish-view">
-    <h2>預約完成</h2>
+    <h2>訂單詳細資訊</h2>
 
     <!-- 左側訂單資訊區域 -->
     <div class="order-info-section">
       <div class="info-card">
+        <h4>訂單資訊</h4>
+        <div class="info-item">
+          <label>訂單編號：</label>
+          <span>{{ order?.orderId }}</span>
+        </div>
         <h4>預約人資料</h4>
         <div class="info-item">
           <label>預約人：</label>
-          <span>{{ bookingData.name }}</span>
+          <span>{{ order?.name }}</span>
         </div>
         <div class="info-item">
           <label>聯絡電話：</label>
-          <span>{{ bookingData.phone }}</span>
+          <span>{{ order?.phone }}</span>
         </div>
-        <!-- <div class="info-item">
-            <label>預約場地日期：</label>
-            <span>{{ bookingData.reservationDate }}</span>
-          </div> -->
       </div>
 
       <div class="info-card">
         <h4 class="section-title">租借資訊</h4>
         <div class="section-content">
           <div class="info-item">
-            <span>預約日期：<span class="info-value">{{ bookingData.reservationDate }}</span></span>
+            <span>預約日期：<span class="info-value">{{ order?.reservationDate }}</span></span>
           </div>
           <div class="info-item">
-            <span>租借場地：<span class="info-value">{{ bookingData.venueName }}</span></span>
+            <span>租借場地：<span class="info-value">{{ order?.venueName }}</span></span>
           </div>
           <div class="info-item">
-            <span>租借類型：<span class="info-value">{{ bookingData.venueType }}</span></span>
+            <span>租借類型：<span class="info-value">{{ order?.venueType }}</span></span>
           </div>
           <div class="info-item">
             <span>預約時段：<span class="info-value">{{ formatTimeSlots }}</span></span>
@@ -40,26 +40,17 @@
             <span>租借器材：<span class="info-value">{{ formatEquipments }}</span></span>
           </div>
           <div class="info-item">
-            <span>場地費用總計：<span class="info-value">{{ bookingData.totalAmount }}元</span></span>
+            <span>場地費用總計：<span class="info-value">{{ order?.totalAmount }}元</span></span>
           </div>
         </div>
       </div>
-
 
       <div class="info-card">
         <h4>繳費方式</h4>
         <div class="info-item">
           <label>付款方式：</label>
-          <span>{{ bookingData.paymentMethod }}</span>
+          <span>{{ order?.paymentMethod }}</span>
         </div>
-        <!-- <div class="info-item">
-            <label>匯款帳號：</label>
-            <span>{{ latestOrder.accountingNumber || '- -' }}</span>
-          </div>
-          <div class="info-item">
-            <label>繳款期限：</label>
-            <span>{{ paymentDueDate }}</span>
-          </div> -->
       </div>
     </div>
 
@@ -78,87 +69,91 @@
   </div>
 
   <div class="button-group">
-    <button class="btn btn-book" @click="goNext">返回首頁</button>
+    <button class="btn btn-book" @click="goNext">返回歷史訂單紀錄</button>
   </div>
-
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import ProgressSteps from '../components/ProgressSteps_Jo.vue'
 
 const router = useRouter()
 const route = useRoute()
 
-// 檢查收到的資料
-console.log('Route query:', route.query)
-
-// 取得付款方式顯示文字
-const displayPaymentMethod = computed(() => {
- const paymentMethods = {
-   'ONLINE_PAYMENT': '線上繳費',
-   'BANK_TRANSFER': 'ATM/銀行臨櫃 轉帳繳費'
- }
- return paymentMethods[route.query.paymentMethod] || route.query.paymentMethod
-})
-
-// 從路由獲取資料
-const bookingData = ref({
-  name: '林林七',  // 這裡可以從 localStorage 或其他地方獲取用戶資料
+// 訂單資料
+const order = ref({
+  orderId: route.params.orderId,   // 從路由參數獲取訂單編號
+  name: '王小明',
   phone: '0912345678',
-  reservationDate: route.query.date,
-  venueName: route.query.title && route.query.courtId 
-   ? `${route.query.title} ${route.query.courtId}場` 
-   : '未選擇場地',
-  venueType: route.query.title || '未選擇類型',
-  timeSlots: JSON.parse(route.query.selectedTime || '[]'),
-  totalAmount: route.query.totalAmount,
-  paymentMethod: displayPaymentMethod.value
+  reservationDate: '2024-01-15',
+  venueName: '籃球場 A',
+  venueType: '室內場地',
+  timeSlots: ['09:00-10:00', '10:00-11:00'],
+  equipments: ['籃球 x2', '球網 x1'],
+  totalAmount: 1200,
+  paymentMethod: '線上信用卡'
 })
+
+// 當 route.params.orderId 變化時更新訂單資料
+const updateOrderId = () => {
+  if (route.params.orderId) {
+    order.value.orderId = route.params.orderId
+    // 這裡可以添加根據訂單號碼獲取詳細訂單資料的 API 調用
+  }
+}
+
+// QR Code 相關
+const qrCodeUrl = ref('https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEMO123456')
+const countdown = ref(600) // 10分鐘倒數
+let countdownTimer
 
 // 格式化時段顯示
 const formatTimeSlots = computed(() => {
- return bookingData.value.timeSlots
-   .map(slot => slot.time)
-   .join('、')
+  return order.value.timeSlots?.join('、') || '無資料'
 })
 
-// 暫時空的器材列表
-const formatEquipments = computed(() => '無')
+// 格式化器材顯示
+const formatEquipments = computed(() => {
+  return order.value.equipments?.join('、') || '無租借器材'
+})
 
-// QR Code 相關
-const countdown = ref(600) // 10分鐘倒數
-const qrCodeUrl = ref('https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEMO123456') // 假QR碼圖片
-
-// 更新QR Code
+// 更新 QR Code
 const manualUpdateQRCode = () => {
- // 這裡可以添加更新QR Code的邏輯
- countdown.value = 600 // 重置倒數計時
+  qrCodeUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEMO${Date.now()}`
+  countdown.value = 600 // 重置倒數時間
 }
 
-// 設定倒數計時
+// 倒數計時
+const startCountdown = () => {
+  countdownTimer = setInterval(() => {
+    if (countdown.value > 0) {
+      countdown.value--
+    } else {
+      clearInterval(countdownTimer)
+      manualUpdateQRCode() // 時間到自動更新 QR Code
+    }
+  }, 1000)
+}
+
+// 返回歷史訂單紀錄
+const goNext = () => {
+  router.push({
+    name: 'userOrderView'
+  })
+}
+
+// 組件掛載時啟動倒數計時
 onMounted(() => {
- const timer = setInterval(() => {
-   if (countdown.value > 0) {
-     countdown.value--
-   } else {
-     clearInterval(timer)
-   }
- }, 1000)
+  updateOrderId()
+  startCountdown()
 })
 
-const goNext = () => {
- // 清除暫存資料
- localStorage.removeItem('bookingData')
- localStorage.removeItem('paymentMethod')
- localStorage.removeItem('reservationInfo')
- 
- // 導航到首頁
- router.push({
-   name: 'home'
- })
-}
+// 組件卸載時清除計時器
+onUnmounted(() => {
+  if (countdownTimer) {
+    clearInterval(countdownTimer)
+  }
+})
 </script>
 
 <style scoped>
@@ -167,24 +162,24 @@ const goNext = () => {
   margin: 0 auto;
   padding: 20px;
 
-  display: flex; /* 使用 flex 布局 */
-  flex-wrap: wrap; /* 在小屏幕時允許換行 */
-  gap: 30px; /* 區塊間距 */
+  display: flex;
+  /* 使用 flex 布局 */
+  flex-wrap: wrap;
+  /* 在小屏幕時允許換行 */
+  gap: 30px;
+  /* 區塊間距 */
 }
 
 /* 主標題獨占一行 */
-.booking-finish-view > h2 {
+.booking-finish-view>h2 {
   width: 100%;
   text-align: center;
   margin-bottom: 30px;
 }
 
-h2 {
-  text-align: center;
-}
-
+h2,
 h4 {
-  text-align: left;
+  text-align: center;
   margin-bottom: 30px;
 }
 
@@ -199,21 +194,13 @@ h4 {
 }
 
 /* 左側 QR Code 區域 */
-/* .qr-code-section {
-  flex: 1;
-  padding: 20px */
-    /*100px 20px 20px*/
-  /* ;
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
 .qr-code-section {
-  flex: 2; /* 佔據空間 */
-  align-self: flex-start; /* 靠上對齊 */
-  position: sticky; /* 固定位置 */
+  flex: 2;
+  /* 佔據空間 */
+  align-self: flex-start;
+  /* 靠上對齊 */
+  position: sticky;
+  /* 固定位置 */
   top: 20px;
   background-color: #f8f9fa;
   border-radius: 10px;
@@ -225,7 +212,6 @@ h4 {
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
-
   text-align: center;
 }
 
@@ -265,20 +251,14 @@ h4 {
 }
 
 /* 左側訂單資訊區域 */
-/* .order-info-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px */
-    /*20px 20px 140px*/
-  /* ;
-} */
 .order-info-section {
-  flex: 2; /* 佔據空間 */
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 20px
+    /*20px 20px 140px*/
+  ;
 }
 
 .info-card {
@@ -309,7 +289,6 @@ h4 {
 .info-item label {
   min-width: 100px;
   color: #666;
-
   display: inline-block;
 }
 

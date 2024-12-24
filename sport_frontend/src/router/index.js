@@ -11,6 +11,11 @@ import BookingDateView from '../views/BookingDateView.vue'
 import BookingPaymentView from '../views/BookingPaymentView.vue'
 import BookingFinishView from '../views/BookingFinishView.vue'
 
+import UserOrderView from '../views/UserOrderView.vue'
+import UserInfoView from '../views/UserInfoView.vue'
+import UserOrderInfoView from '../views/UserOrderInfoView.vue'
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -50,24 +55,39 @@ const router = createRouter({
       component: CardInfoView
     },
     {
-      path: '/bookingCardView',
+      path: '/bookingCardView/:id',
       name: 'bookingCardView',
       component: BookingCardView
     },
     {
-      path: '/bookingDateView',
+      path: '/bookingDateView/:id',
       name: 'bookingDateView',
       component: BookingDateView
     },
     {
-      path: '/bookingPaymentView',
+      path: '/bookingPaymentView/:id',
       name: 'bookingPaymentView',
       component: BookingPaymentView
     },
     {
-      path: '/bookingFinishView',
+      path: '/bookingFinishView/:id',
       name: 'bookingFinishView',
       component: BookingFinishView
+    },
+    {
+      path: '/userOrder',
+      name: 'userOrderView',
+      component: UserOrderView,
+    },
+    {
+      path: '/userInfo',
+      name: 'userInfoView',
+      component: UserInfoView,
+    },
+    {
+      path: '/userOrderInfo/:orderId',
+      name: 'userOrderInfoView',
+      component: UserOrderInfoView,
     }
   ]
 })
