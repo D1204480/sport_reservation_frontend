@@ -775,7 +775,7 @@ input[type="password"]::placeholder {
   padding: 8px 24px;
   border-radius: 4px;
   cursor: pointer;
-  background-color: #019ee7;
+  background-color: #FF7452;
   border: none;
 }
 
