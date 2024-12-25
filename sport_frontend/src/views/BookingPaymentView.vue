@@ -72,7 +72,7 @@ console.log('Route query:', route.query)
 // 從路由獲取資料
 const bookingData = ref({
   name: JSON.parse(localStorage.getItem('user'))?.name || '未登入',  // 從 localStorage 獲取名字
- phone: '0912345678',
+ phone: JSON.parse(localStorage.getItem('user'))?.phone || '未登入',
  reservationDate: route.query.date,
  venueName: route.query.title && route.query.courtId 
    ? `${route.query.title} ${route.query.courtId}場` 
