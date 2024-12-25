@@ -5,7 +5,11 @@
       <!-- 日曆元件 -->
       <div class="calendar">
         <div class="calendar-header">
-          <button @click="changeMonth(-1)">&lt;</button>
+          <button @click="changeMonth(-1)"
+          :disabled="isPreviousMonthDisabled"
+          :class="{ 'disabled': isPreviousMonthDisabled }">
+            &lt;
+          </button>
           <span>{{ currentMonthDisplay }}</span>
           <button @click="changeMonth(1)">&gt;</button>
         </div>
@@ -17,8 +21,9 @@
             'gray': date.type === 'prev' || date.type === 'next',
             'selected': isSelectedDate(date),
             'holiday': isHoliday(date),
-            'full': isFullyBooked(date)
-          }" @click="selectDate(date)">
+            'full': isFullyBooked(date),
+            'expired': isExpiredDate(date)  // 新增這行
+          }" @click="!isExpiredDate(date) && selectDate(date)">
             {{ date.day }}
           </div>
         </div>
@@ -121,6 +126,15 @@ const currentMonthDisplay = computed(() => {
   return `${currentDate.value.getMonth() + 1}月 ${currentDate.value.getFullYear()}`
 })
 
+// 判斷上個月按鈕是否該禁用
+const isPreviousMonthDisabled = computed(() => {
+  const today = new Date()
+  const currentViewMonth = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth())
+  const thisMonth = new Date(today.getFullYear(), today.getMonth())
+  
+  return currentViewMonth <= thisMonth
+})
+
 const selectedDateDisplay = computed(() => {
   return `${selectedDate.value.getMonth() + 1}月${selectedDate.value.getDate()}日`
 })
@@ -175,15 +189,33 @@ const totalSelectedHours = computed(() => {
 
 // Methods
 const changeMonth = (delta) => {
-  currentDate.value = new Date(
+  const newDate = new Date(
     currentDate.value.getFullYear(),
     currentDate.value.getMonth() + delta,
     1
   )
+  
+  // 獲取當前日期（月份開始）
+  const today = new Date()
+  today.setDate(1)
+  today.setHours(0, 0, 0, 0)
+  
+  // 只有當新日期不早於當前月份時才更新
+  if (delta > 0 || newDate >= today) {
+    currentDate.value = newDate
+  }
 }
 
 const formatDateString = (date) => {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+}
+
+// 判斷日期是否已過期
+const isExpiredDate = (dateObj) => {
+  if (dateObj.type !== 'current') return false
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return dateObj.date < today
 }
 
 const isSelectedDate = (dateObj) => {
@@ -205,8 +237,9 @@ const isFullyBooked = (dateObj) => {
 
 const selectDate = (dateObj) => {
   if (dateObj.type !== 'current' ||
-    isHoliday(dateObj) ||
-    isFullyBooked(dateObj)) return
+      isHoliday(dateObj) ||
+      isFullyBooked(dateObj) ||
+      isExpiredDate(dateObj)) return  // 增加這個條件
 
   selectedDate.value = dateObj.date
 }
@@ -324,6 +357,17 @@ body {
   padding: 5px 10px;
 }
 
+.calendar-header button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: #ccc;
+}
+
+/* 移除 disabled 按鈕的 hover 效果 */
+.calendar-header button.disabled:hover {
+  background: none;
+}
+
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -348,7 +392,7 @@ body {
 }
 
 .date.gray {
-  color: #999;
+  color: rgb(249, 249, 249);
 }
 
 .date.selected {
@@ -364,6 +408,12 @@ body {
 .date.full {
   background-color: #8c6bff;
   color: white;
+}
+
+.date.expired {
+  color: #ccc;
+  cursor: not-allowed;
+  /* background-color: #f5f5f5; */
 }
 
 .time-slots {
