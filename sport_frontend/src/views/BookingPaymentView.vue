@@ -58,88 +58,6 @@
   </div>
 </template>
 
-<!-- <script>
-export default {
-  name: 'bookingPayment',
-  components: {
-    ProgressSteps
-  },
-
-  data() {
-    return {
-      
-    }
-  },
-
-  computed: {
-    formatTimeSlots() {
-      return this.bookingData.timeSlots
-        .map(slot => slot.time)
-        .join('、')
-    },
-    
-  },
-
-  created() {
-    // 保存進入頁面時的查詢參數
-    this.originalQuery = { ...this.$route.query }
-
-    try {
-      // 載入使用者資料
-      const userData = localStorage.getItem('user')
-      if (userData) {
-        this.userId = JSON.parse(userData).userId
-      }
-
-      // 載入預約資料
-      
-    } catch (error) {
-      console.error('Error loading booking data:', error)
-    }
-  },
-
-  methods: {
-    async submitBooking() {
-      
-
-        
-    },
-
-    goBack() {
-      this.$router.push({
-        name: "BookingDateView",
-        params: { },
-        query: this.originalQuery
-      })
-    },
-
-    goNext() {
-      // 送出資料
-      this.submitBooking(),
-
-        // 導航到付款頁面
-        this.$router.push({
-          name: "BookingFinishView",
-          params: {  },
-          query: this.originalQuery
-        })
-    },
-  },
-
-  watch: {
-    paymentMethod: {
-      handler(newValue) {
-        try {
-          this.bookingData.paymentMethod = newValue
-          localStorage.setItem('bookingData', JSON.stringify(this.bookingData))
-        } catch (error) {
-          console.error('Error saving booking data:', error)
-        }
-      }
-    }
-  }
-}
-</script> -->
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
@@ -153,7 +71,7 @@ console.log('Route query:', route.query)
 
 // 從路由獲取資料
 const bookingData = ref({
- name: '林林七',  // 這裡可以從 localStorage 或其他地方獲取用戶資料
+  name: JSON.parse(localStorage.getItem('user'))?.name || '未登入',  // 從 localStorage 獲取名字
  phone: '0912345678',
  reservationDate: route.query.date,
  venueName: route.query.title && route.query.courtId 
