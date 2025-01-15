@@ -81,27 +81,27 @@ export default {
       ],
       carouselSlides: [
         {
-          image: '/carousel/s01.png',
+          image: '/sport_reservation_frontend/carousel/s01.png',
           alt: '瑜珈運動'
         },
         {
-          image: '/carousel/s02.png',
+          image: '/sport_reservation_frontend/carousel/s02.png',
           alt: '游泳'
         },
         {
-          image: '/carousel/s03.png',
+          image: '/sport_reservation_frontend/carousel/s03.png',
           alt: '攀岩'
         },
         {
-          image: '/carousel/s01.png',
+          image: '/sport_reservation_frontend/carousel/s01.png',
           alt: 'whiteDog'
         },
         {
-          image: '/carousel/s02.png',
+          image: '/sport_reservation_frontend/carousel/s02.png',
           alt: 'YellowDog'
         },
         {
-          image: '/carousel/s03.png',
+          image: '/sport_reservation_frontend/carousel/s03.png',
           alt: 'cat'
         }
       ]
