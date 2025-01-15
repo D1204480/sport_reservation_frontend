@@ -20,37 +20,37 @@ export default {
       sports: [
         {
           id: 1,
-          image: '/sports/01.svg',
+          image: '/sport_reservation_frontend/sports/01.svg',
           alt: '籃球場',
           title: '籃球'
         },
         {
           id: 2,
-          image: '/sports/02.svg',
+          image: '/sport_reservation_frontend/sports/02.svg',
           alt: '桌球',
           title: '桌球'
         },
         {
           id: 3,
-          image: '/sports/03.svg',
+          image: '/sport_reservation_frontend/sports/03.svg',
           alt: '游泳池',
           title: '游泳池'
         },
         {
           id: 4,
-          image: '/sports/04.svg',
+          image: '/sport_reservation_frontend/sports/04.svg',
           alt: '羽球場',
           title: '羽球'
         },
         {
           id: 5,
-          image: '/sports/05.svg',
+          image: '/sport_reservation_frontend/sports/05.svg',
           alt: '排球場',
           title: '排球'
         },
         {
           id: 6,
-          image: '/sports/06.svg',
+          image: '/sport_reservation_frontend/sports/06.svg',
           alt: '攀岩場',
           title: '攀岩'
         }
