@@ -103,42 +103,42 @@ const sportTitle = ref(route.query.title || '運動')
 // 所有場地資料
 const allCourts = {
   1: [ // 籃球
-    { id: 'A', title: '籃球A場', image: '/courts/b01.png' },
-    { id: 'B', title: '籃球B場', image: '/courts/b02.png' },
-    { id: 'C', title: '籃球C場', image: '/courts/b03.png' },
-    { id: 'D', title: '籃球D場', image: '/courts/b04.png' },
-    { id: 'E', title: '籃球E場', image: '/courts/b05.png' },
-    { id: 'F', title: '籃球F場', image: '/courts/b06.png' }
+    { id: 'A', title: '籃球A場', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'B', title: '籃球B場', image: '/sport_reservation_frontend/courts/b02.png' },
+    { id: 'C', title: '籃球C場', image: '/sport_reservation_frontend/courts/b03.png' },
+    { id: 'D', title: '籃球D場', image: '/sport_reservation_frontend/courts/b04.png' },
+    { id: 'E', title: '籃球E場', image: '/sport_reservation_frontend/courts/b05.png' },
+    { id: 'F', title: '籃球F場', image: '/sport_reservation_frontend/courts/b06.png' }
   ],
   2: [ // 桌球
-    { id: 'A', title: '桌球A區', image: '/courts/b01.png' },
-    { id: 'B', title: '桌球B區', image: '/courts/b02.png' },
-    { id: 'C', title: '桌球C區', image: '/courts/b01.png' },
+    { id: 'A', title: '桌球A區', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'B', title: '桌球B區', image: '/sport_reservation_frontend/courts/b02.png' },
+    { id: 'C', title: '桌球C區', image: '/sport_reservation_frontend/courts/b01.png' },
   ],
   3: [ // 游泳池
-    { id: 'A', title: '游泳池', image: '/courts/b01.png' },
+    { id: 'A', title: '游泳池', image: '/sport_reservation_frontend/courts/b01.png' },
   ],
   4: [ // 羽球
-    { id: 'A', title: '羽球A場', image: '/courts/b01.png' },
-    { id: 'B', title: '羽球B場', image: '/courts/b02.png' },
-    { id: 'C', title: '羽球C場', image: '/courts/b01.png' },
-    { id: 'D', title: '羽球D區', image: '/courts/b02.png' },
-    { id: 'E', title: '羽球E區', image: '/courts/b01.png' },
-    { id: 'F', title: '羽球F區', image: '/courts/b02.png' },
+    { id: 'A', title: '羽球A場', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'B', title: '羽球B場', image: '/sport_reservation_frontend/courts/b02.png' },
+    { id: 'C', title: '羽球C場', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'D', title: '羽球D區', image: '/sport_reservation_frontend/courts/b02.png' },
+    { id: 'E', title: '羽球E區', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'F', title: '羽球F區', image: '/sport_reservation_frontend/courts/b02.png' },
   ],
   5: [ // 桌球
-    { id: 'A', title: '排球A場', image: '/courts/b01.png' },
-    { id: 'B', title: '排球B場', image: '/courts/b02.png' },
-    { id: 'C', title: '排球C場', image: '/courts/b01.png' },
-    { id: 'D', title: '排球D場', image: '/courts/b02.png' },
-    { id: 'E', title: '排球E場', image: '/courts/b01.png' },
-    { id: 'F', title: '排球F場', image: '/courts/b02.png' },
+    { id: 'A', title: '排球A場', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'B', title: '排球B場', image: '/sport_reservation_frontend/courts/b02.png' },
+    { id: 'C', title: '排球C場', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'D', title: '排球D場', image: '/sport_reservation_frontend/courts/b02.png' },
+    { id: 'E', title: '排球E場', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'F', title: '排球F場', image: '/sport_reservation_frontend/courts/b02.png' },
   ],
   6: [ // 桌球
-    { id: 'A', title: '攀岩A場', image: '/courts/b01.png' },
-    { id: 'B', title: '攀岩B場', image: '/courts/b02.png' },
-    { id: 'C', title: '攀岩C場', image: '/courts/b01.png' },
-    { id: 'D', title: '攀岩D場', image: '/courts/b02.png' },
+    { id: 'A', title: '攀岩A場', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'B', title: '攀岩B場', image: '/sport_reservation_frontend/courts/b02.png' },
+    { id: 'C', title: '攀岩C場', image: '/sport_reservation_frontend/courts/b01.png' },
+    { id: 'D', title: '攀岩D場', image: '/sport_reservation_frontend/courts/b02.png' },
   ],
   
 }

@@ -2,12 +2,12 @@ export const sportsData = {
     1: {  // 籃球
       title: '籃球場',
       images: [
-        '/sports/bs01.png',
-        '/sports/bs02.png',
-        '/sports/bs03.png',
-        '/sports/bs04.png',
-        '/sports/bs05.png',
-        '/sports/bs06.png'
+        '/sport_reservation_frontend/sports/bs01.png',
+        '/sport_reservation_frontend/sports/bs02.png',
+        '/sport_reservation_frontend/sports/bs03.png',
+        '/sport_reservation_frontend/sports/bs04.png',
+        '/sport_reservation_frontend/sports/bs05.png',
+        '/sport_reservation_frontend/sports/bs06.png'
       ],
       businessHours: {
         title: '營業時間',
@@ -50,9 +50,9 @@ export const sportsData = {
     2: {  // 桌球
       title: '桌球室',
       images: [
-        '/sports/tt01.png',
-        '/sports/tt02.png',
-        '/sports/tt03.png'
+        '/sport_reservation_frontend/sports/tt01.png',
+        '/sport_reservation_frontend/sports/tt02.png',
+        '/sport_reservation_frontend/sports/tt03.png'
       ],
       businessHours: {
         title: '營業時間',
@@ -82,10 +82,10 @@ export const sportsData = {
     3: {  // 游泳池
       title: '游泳池',
       images: [
-        '/sports/sw01.png',
-        '/sports/sw02.jpg',
-        '/sports/sw03.jpg',
-        '/sports/sw04.jpg'
+        '/sport_reservation_frontend/sports/sw01.png',
+        '/sport_reservation_frontend/sports/sw02.jpg',
+        '/sport_reservation_frontend/sports/sw03.jpg',
+        '/sport_reservation_frontend/sports/sw04.jpg'
       ],
       businessHours: {
         title: '營業時間',
@@ -126,10 +126,10 @@ export const sportsData = {
     4: {  // 羽球
       title: '羽球場',
       images: [
-        '/sports/bd01.jpg',
-        '/sports/bd02.jpg',
-        '/sports/bd03.jpg',
-        '/sports/bd04.jpg'
+        '/sport_reservation_frontend/sports/bd01.jpg',
+        '/sport_reservation_frontend/sports/bd02.jpg',
+        '/sport_reservation_frontend/sports/bd03.jpg',
+        '/sport_reservation_frontend/sports/bd04.jpg'
       ],
       businessHours: {
         title: '營業時間',
@@ -159,9 +159,9 @@ export const sportsData = {
     5: {  // 排球
       title: '排球場',
       images: [
-        '/sports/vb01.png',
-        '/sports/vb02.png',
-        '/sports/vb03.png'
+        '/sport_reservation_frontend/sports/vb01.png',
+        '/sport_reservation_frontend/sports/vb02.png',
+        '/sport_reservation_frontend/sports/vb03.png'
       ],
       businessHours: {
         title: '營業時間',
@@ -190,10 +190,10 @@ export const sportsData = {
     6: {  // 攀岩
       title: '攀岩場',
       images: [
-        '/sports/cl01.png',
-        '/sports/cl02.png',
-        '/sports/cl03.png',
-        '/sports/cl04.png'
+        '/sport_reservation_frontend/sports/cl01.png',
+        '/sport_reservation_frontend/sports/cl02.png',
+        '/sport_reservation_frontend/sports/cl03.png',
+        '/sport_reservation_frontend/sports/cl04.png'
       ],
       businessHours: {
         title: '營業時間',
