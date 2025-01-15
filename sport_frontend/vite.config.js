@@ -14,5 +14,5 @@ export default defineConfig({
     }
   },
 
-  base: '/sport_reservation_frontend/',
+  base: '/sport_reservation_frontend/',  // GitHub repository 名稱
 })
