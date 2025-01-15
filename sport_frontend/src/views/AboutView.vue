@@ -80,10 +80,10 @@ export default {
           facilities: ['服務台', '置物櫃區', '休息區', '飲水機'],
           openingHours: '週一至週日 06:00-22:00',
           images: [
-            '/floor/101.jpg',
-            '/floor/102.jpg',
-            '/floor/103.png',
-            '/floor/104.jpg'
+            '/sport_reservation_frontend/floor/101.jpg',
+            '/sport_reservation_frontend/floor/102.jpg',
+            '/sport_reservation_frontend/floor/103.png',
+            '/sport_reservation_frontend/floor/104.jpg'
           ]
         },
         {
@@ -93,10 +93,10 @@ export default {
           facilities: ['休息區', '飲水機', '更衣室', '淋浴間'],
           openingHours: '週一至週日 06:00-22:00',
           images: [
-            '/floor/201.png',
-            '/floor/202.png',
-            '/floor/203.png',
-            '/floor/204.png'
+            '/sport_reservation_frontend/floor/201.png',
+            '/sport_reservation_frontend/floor/202.png',
+            '/sport_reservation_frontend/floor/203.png',
+            '/sport_reservation_frontend/floor/204.png'
           ]
         },
         {
@@ -106,10 +106,10 @@ export default {
           facilities: ['休息區', '飲水機', '更衣室', '淋浴間'],
           openingHours: '週一至週日 06:00-22:00',
           images: [
-            '/floor/302.jpg',
-            '/floor/301.jpg',
-            '/floor/303.jpg',
-            '/floor/304.jpg'
+            '/sport_reservation_frontend/floor/302.jpg',
+            '/sport_reservation_frontend/floor/301.jpg',
+            '/sport_reservation_frontend/floor/303.jpg',
+            '/sport_reservation_frontend/floor/304.jpg'
           ]
         },
         {
@@ -119,10 +119,10 @@ export default {
           facilities: ['重訓室', '舞蹈教室', '飛輪教室', '休息區'],
           openingHours: '依課程時間',
           images: [
-            '/floor/401.png',
-            '/floor/402.png',
-            '/floor/403.png',
-            '/floor/404.png'
+            '/sport_reservation_frontend/floor/401.png',
+            '/sport_reservation_frontend/floor/402.png',
+            '/sport_reservation_frontend/floor/403.png',
+            '/sport_reservation_frontend/floor/404.png'
           ]
         },
         {
@@ -132,10 +132,10 @@ export default {
           facilities: ['25米溫水游泳池', '兒童池', 'SPA池', '蒸氣室'],
           openingHours: '週一至週日 06:00-21:30',
           images: [
-            '/floor/501.png',
-            '/floor/502.jpg',
-            '/floor/503.jpg',
-            '/floor/504.jpg'
+            '/sport_reservation_frontend/floor/501.png',
+            '/sport_reservation_frontend/floor/502.jpg',
+            '/sport_reservation_frontend/floor/503.jpg',
+            '/sport_reservation_frontend/floor/504.jpg'
           ]
         }
       ]
