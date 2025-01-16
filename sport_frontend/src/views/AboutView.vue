@@ -216,7 +216,7 @@ export default {
 
   white-space: nowrap;
   /* 防止文字換行 */
-  overflow: hidden;
+  overflow: hidden; 
   /* 隱藏溢出內容 */
   text-overflow: ellipsis;
   /* 顯示省略號 */
@@ -227,8 +227,8 @@ export default {
 }
 
 .floor-list li.active {
-  background-color: #739090;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(255, 108, 29);
 }
 
 /* 主要內容區域 */
